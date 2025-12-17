@@ -1,16 +1,91 @@
-# React + Vite
+# Prufy 🟢  
+### Proof of Work • Tasks • Focus
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Prufy** is a proof-of-work–driven task manager that focuses not just on *what* you plan to do, but on the **work you actually put in**.
 
-Currently, two official plugins are available:
+Inspired by systems like Google Classroom, Prufy brings accountability, clarity, and focus to personal productivity.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Why Prufy?
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Most todo apps stop at checkboxes.  
+Prufy goes further by encouraging **visible effort and progress**.
 
-## Expanding the ESLint configuration
+> Tasks without proof are just intentions.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Prufy is built for:
+- Focused work
+- Accountability
+- Clean, distraction-free workflows
+
+---
+
+## 🧠 Core Idea
+
+Each task in Prufy is meant to have:
+- A clear start
+- Logged work sessions
+- A meaningful finish
+
+The UI is designed to make progress *visible*, not noisy.
+
+---
+
+## 🖥️ Features (Current)
+
+- ✅ Create tasks instantly
+- ✅ Master–detail layout (task list + side panel)
+- ✅ Smooth panel animations
+- ✅ Clean, calming green UI
+- ✅ Reusable and scalable components
+- ✅ Desktop-first design
+
+---
+
+## 🧩 Planned Features
+
+- ⏱️ Work session tracking (Start / Finish)
+- 📝 Logs for each task
+- 📊 Time spent per task
+- 🔍 Search tasks by work/logs
+- 🌐 Public & private task visibility
+- 💾 Local storage / backend integration
+
+---
+
+## 🎨 UI Philosophy
+
+- Calm, focused color palette
+- Minimal cognitive load
+- Clear visual hierarchy
+- Animations that explain interactions, not distract
+
+Responsiveness will be added after the desktop experience is finalized.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** React + Vite
+- **Styling:** Vanilla CSS
+- **State Management:** React Hooks
+- **Animations:** CSS transitions (state-driven)
+- **Version Control:** Git & GitHub
+
+---
+
+## 🚀 Getting Started
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/prufy.git
+
+# Navigate into the project
+cd prufy
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
