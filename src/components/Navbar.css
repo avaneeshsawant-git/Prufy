@@ -1,0 +1,29 @@
+.nav{
+    height: 4vh;
+    display: flex;
+    background-color: #166534;
+    padding: 20px;
+    gap: 10px;
+    justify-content: space-between;
+    color: #e0ffe7;
+    align-items: center;
+}
+.brand{
+    font-family:cursive
+}
+
+.left_profile{
+    display: flex;
+    gap:38px;
+}
+.right_profile{
+    display: flex;
+    list-style: none;
+    gap:48px;
+    align-items: center;
+}
+
+.search{
+    border: 2px solid rgb(3, 42, 3);
+    padding: 4px;
+}

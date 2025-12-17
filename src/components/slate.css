@@ -1,0 +1,32 @@
+.slate{
+    margin: 60px;
+    padding: 24px;
+    box-sizing: border-box;
+    height: 5rem;
+    width: 42rem;
+    background-color: #166534;
+    display: flex;
+    justify-content:space-between;
+    gap: 10px;
+    align-items: center;
+    color: #e0ffe7;
+    cursor: pointer;
+
+}
+.indicator{
+    height: 18px;
+    width:50px;
+    background-color: rgba(135, 210, 135, 0.763);
+    border: 1px solid rgb(0, 255, 0);
+    border-radius: 20px;
+    text-align: center;
+    box-sizing: border-box;
+    /* padding: 2px; */
+    font-size: 12px;
+}
+
+.leftside{
+    display: flex;
+    gap:10px;
+    align-items: center;
+}
