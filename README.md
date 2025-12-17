@@ -79,7 +79,7 @@ Responsiveness will be added after the desktop experience is finalized.
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/prufy.git
+git clone https://github.com/avaneeshsawant-git/prufy.git
 
 # Navigate into the project
 cd prufy
