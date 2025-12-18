@@ -4,7 +4,7 @@ const Navbar = () => {
   return (
     <div className='nav'>
       <div className='left_profile'>
-        <h2 className='brand'>proofy</h2>
+        <h2 className='brand'>Prufy</h2>
         <input type="text" className='search' placeholder='search' />
       </div>
       <ul className='right_profile'>

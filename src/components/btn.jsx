@@ -1,9 +1,9 @@
 import React from 'react'
 import './btn.css'
 
-const Btn = ({ header, variant = "primary" }) => {
+const Btn = ({ header, variant = "primary", onClick }) => {
   return (
-    <div className={`but but-${variant}`}>
+    <div className={`but but-${variant}`} onClick={onClick}>
       {header}
     </div>
   );

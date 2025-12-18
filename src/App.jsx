@@ -34,16 +34,23 @@ function App() {
     refer.current.style.top = `-13rem`
   }
 
-  const Shift = () => {
-  setShifted(true)
-};
+  const Shift = async () => {
+    setShifted(true)
+    box.current.style.transform=`translateX(0rem)`
+    box.current.style.opacity=100
+  };
+  const unShift = async () => {
+    box.current.style.opacity=0
+    setShifted(false)
+    box.current.style.transform=`translateX(-34rem)`
+  }
 
 
 
   return (
     <div className="main">
       <Navbar />
-      <div ref={box} className="body">
+      <div className="body">
         <h1 className='page_title'>your work & tasks!</h1>
         <div className={`inside_box ${shifted ? "shifted" : ""}`}>
           <button className='Add_but' onClick={handle} >ADD</button>
@@ -55,7 +62,7 @@ function App() {
             </div>
           })}
         </div>
-          <Card/>
+        <Card ref={box} onClick={unShift}/>
       </div>
     </div>
   )
