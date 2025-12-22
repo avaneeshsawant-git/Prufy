@@ -10,7 +10,7 @@ function App() {
   const [task, setTask] = useState("")
   const [tasks, setTasks] = useState([])
   const [shifted, setShifted] = useState(false);
-
+  const [activatetaskID, setActivatetaskID] = useState(null)
   const refer = useRef()
   const box = useRef()
 
@@ -26,7 +26,12 @@ function App() {
   }
   const handlesubmit = () => {
     if (!task.trim()) return
-    setTasks([...tasks, { task }])
+    setTasks([...tasks, {
+      id: crypto.randomUUID(),
+      task: task,
+      description: "",
+      createdAt: new Date().toISOString().split('T')[0]
+    }])
     setTask("");
 
 
@@ -34,16 +39,18 @@ function App() {
     refer.current.style.top = `-13rem`
   }
 
-  const Shift = async () => {
+  const handleDelete = (id) => {
+    setTasks(tasks.filter(item => item.id !== id))
+    setActivatetaskID(null);
+    setShifted(false);
+    }
+
+  const Shift = (id) => {
     setShifted(true)
-    box.current.style.transform=`translateX(0rem)`
-    box.current.style.opacity=100
+    setActivatetaskID(id)
+    // console.log(activatetaskID)
   };
-  const unShift = async () => {
-    box.current.style.opacity=0
-    setShifted(false)
-    box.current.style.transform=`translateX(-34rem)`
-  }
+
 
 
 
@@ -56,13 +63,32 @@ function App() {
           <button className='Add_but' onClick={handle} >ADD</button>
           <input ref={refer} onChange={handlechange} onKeyDown={(e) => e.key === "Enter" && handlesubmit()}
             value={task} className='Add_title' type='text' placeholder='Add Task' />
+
+          {tasks.length === 0 && (
+            <p className="empty">Add some tasks!</p>
+          )}
+
           {tasks.map(item => {
-            return <div>
-              <Slate title={item.task} onClick={Shift} />
+            return < div key={item.id} >
+              {<Slate title={item.task} onClick={() => Shift(item.id)} /> || "add some tasks!"}
             </div>
           })}
+
         </div>
-        <Card ref={box} onClick={unShift}/>
+
+        <Card
+          task={tasks.find(t => t.id === activatetaskID)}
+          isOpen={Boolean(activatetaskID)}
+          onUpdate={(desc) => {
+            setTasks(tasks.map(t => t.id === activatetaskID ? { ...t, description: desc } : t));
+          }}
+          onClick={() => {
+            setShifted(false);
+            setActivatetaskID(null);
+          }}
+          onDelete={() => handleDelete(activatetaskID)}
+        />
+
       </div>
     </div>
   )

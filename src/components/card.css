@@ -5,13 +5,24 @@
     position: absolute;
     border: 1px solid #166534;
     border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     background-color: #e0ffe7;
     top: 10.2rem;
     right: 5rem;
     opacity: 0;
-    transform: translateX(-34rem);
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-        opacity 1s ease 0.4s;
+    transform: translateX(-24rem) scale(0.95);
+    transition:
+        transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.75s ease;
+    pointer-events: none;
+}
+
+.card.open {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    pointer-events: auto;
 }
 
 .close {
@@ -43,6 +54,7 @@
     margin-bottom: 1rem;
     width: 80%;
     height: 5.6rem;
+    white-space: normal;
     cursor: pointer;
     display: -webkit-box;
     -webkit-line-clamp: 4;
@@ -69,4 +81,57 @@
     height: 5.6rem;
     font-size: 15px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.card_button {
+    width: 8rem;
+    height: 2.5rem;
+    margin-left: 4%;
+    border: none;
+    border-radius: 8px;
+    background-color: #166534;
+    color: #e0ffe7;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.card_button:hover {
+    background-color: #14532d;
+}
+
+.card_button:active {
+    transform: scale(1.05);
+}
+
+.card_DELETE {
+    width: 8rem;
+    height: 2.5rem;
+    margin-left: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    background: transparent;
+    border: 1px solid #b91c1c;
+    color: #b91c1c;
+}
+
+.date {
+    position: absolute;
+    font-family: 'Courier New', Courier, monospace;
+    bottom: 2.5rem;
+    left: 4%;
+    font-size: 0.9rem;
+    color: #00290f;
+}
+
+.status {
+    font-family: 'Times New Roman', Times, serif;
+    position: absolute;
+    bottom: 1rem;
+    left: 4%;
+    font-size: 0.9rem;
+    color: #00290f;
 }
