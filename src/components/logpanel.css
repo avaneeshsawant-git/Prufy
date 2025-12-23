@@ -1,0 +1,48 @@
+.panel {
+    z-index: 1;
+    height: 30vh;
+    width: 30rem;
+    position: absolute;
+    border: 1px solid #166534;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #e0ffe7;
+    top: 34.4rem;
+    right: 5rem;
+    opacity: 1;
+    /* transform: translateX(-24rem) scale(0.95);
+    transition:
+        transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.75s ease;
+    pointer-events: none; */
+}
+
+.panel.open {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    pointer-events: auto;
+}
+
+.upper {
+    height: 3rem;
+    width: 30rem;
+    background-color: #166534;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 13px;
+    color: #e0ffe7;
+}
+
+.close-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    top: 0.6rem;
+    right: 1rem;
+    cursor: pointer;
+}

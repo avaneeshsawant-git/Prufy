@@ -1,6 +1,6 @@
 .card {
     z-index: 1;
-    height: 50vh;
+    height: 46vh;
     width: 30rem;
     position: absolute;
     border: 1px solid #166534;
@@ -107,7 +107,7 @@
 .card_DELETE {
     width: 8rem;
     height: 2.5rem;
-    margin-left: 1rem;
+    margin-left: 4%;
     border: none;
     border-radius: 8px;
     font-size: 1rem;

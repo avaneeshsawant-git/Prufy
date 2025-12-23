@@ -5,6 +5,7 @@ import './App.css'
 import Navbar from './components/Navbar'
 import Slate from './components/slate'
 import Card from './components/card'
+import Logpanel from './components/logpanel'
 
 function App() {
   const [task, setTask] = useState("")
@@ -88,6 +89,7 @@ function App() {
           }}
           onDelete={() => handleDelete(activatetaskID)}
         />
+        <Logpanel />
 
       </div>
     </div>
