@@ -36,6 +36,31 @@
     font-family: 'Courier New', Courier, monospace;
     padding: 13px;
     color: #e0ffe7;
+    transition: height 0.3s ease;
+}
+
+.addlog{
+    background-color: #e0ffe7;
+    width: 8rem;
+    height: 1.5rem;
+    position: absolute;
+    top: 3rem;
+    left: 1rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    display: none;
+    transition: display 10s ease;
+
+}
+
+.visible{
+    display: flex;
+}
+
+.loginput{
+    width: 4rem;
+    height: 1.5rem;
 }
 
 .close-icon {
@@ -44,5 +69,14 @@
     position: absolute;
     top: 0.6rem;
     right: 1rem;
+    cursor: pointer;
+}
+
+.add_icon{
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    top: 0.6rem;
+    right: 3rem;
     cursor: pointer;
 }

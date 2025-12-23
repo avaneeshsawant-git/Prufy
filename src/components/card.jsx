@@ -2,6 +2,7 @@ import React from 'react'
 import { useState ,useEffect} from 'react'
 import './card.css'
 import close from '../assets/close.svg'
+import add from '../assets/add.svg'
 
 const Card = (prop) => {
   useEffect(() => {

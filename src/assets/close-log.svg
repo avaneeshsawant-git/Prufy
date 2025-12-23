@@ -11,7 +11,7 @@
     y1="6"
     x2="18"
     y2="18"
-    stroke=" #e0ffe7"
+    stroke="#e0ffe7"
     stroke-width="2.5"
     stroke-linecap="round"
   />
@@ -20,7 +20,7 @@
     y1="6"
     x2="6"
     y2="18"
-    stroke=" #e0ffe7"
+    stroke="#e0ffe7"
     stroke-width="2.5"
     stroke-linecap="round"
   />
