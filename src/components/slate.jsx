@@ -11,7 +11,7 @@ const slate = (prop) => {
             </div>
             <div className="leftside">
                 <Btn header="Info" variant="primary" onClick={prop.onClick} />
-                <Btn header="Logs" variant="secondary" className="but-disabled"/>
+                <Btn header="Logs" variant="secondary" className="but-disabled" onClick={prop.onLogsclick}/>
                 <Btn header="Finish" variant="danger" className="but-disabled" />
 
             </div>

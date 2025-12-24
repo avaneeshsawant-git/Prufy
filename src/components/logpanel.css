@@ -11,12 +11,12 @@
     background-color: #e0ffe7;
     top: 34.4rem;
     right: 5rem;
-    opacity: 1;
-    /* transform: translateX(-24rem) scale(0.95);
+    opacity: 0;
+    transform: translateX(-24rem) scale(0.95);
     transition:
         transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
         opacity 0.75s ease;
-    pointer-events: none; */
+    pointer-events: none;
 }
 
 .panel.open {

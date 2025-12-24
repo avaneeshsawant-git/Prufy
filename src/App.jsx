@@ -12,6 +12,8 @@ function App() {
   const [tasks, setTasks] = useState([])
   const [shifted, setShifted] = useState(false);
   const [activatetaskID, setActivatetaskID] = useState(null)
+  const [cardopen, setCardopen] = useState(false)
+  const [logsopen, setLogsopen] = useState(false)
   const refer = useRef()
   const box = useRef()
 
@@ -44,14 +46,24 @@ function App() {
     setTasks(tasks.filter(item => item.id !== id))
     setActivatetaskID(null);
     setShifted(false);
+    setCardopen(false);
+    setLogsopen(false);
     }
 
-  const Shift = (id) => {
+  const CardShift = (id) => {
     setShifted(true)
     setActivatetaskID(id)
+    setCardopen(true)
     // console.log(activatetaskID)
   };
 
+  const logPanelShift = (id) => {
+    setLogsopen(true)
+    setShifted(true)
+    setActivatetaskID(id)
+  }
+  
+  
 
 
 
@@ -71,7 +83,7 @@ function App() {
 
           {tasks.map(item => {
             return < div key={item.id} >
-              {<Slate title={item.task} onClick={() => Shift(item.id)} /> || "add some tasks!"}
+              {<Slate title={item.task} onClick={() => CardShift(item.id) } onLogsclick={() => logPanelShift(item.id)} /> || "add some tasks!"}
             </div>
           })}
 
@@ -79,17 +91,35 @@ function App() {
 
         <Card
           task={tasks.find(t => t.id === activatetaskID)}
-          isOpen={Boolean(activatetaskID)}
+          isOpen={cardopen}
           onUpdate={(desc) => {
             setTasks(tasks.map(t => t.id === activatetaskID ? { ...t, description: desc } : t));
           }}
           onClick={() => {
-            setShifted(false);
-            setActivatetaskID(null);
+            if (logsopen === false) {
+              
+              setShifted(false);
+              setActivatetaskID(null);
+              setCardopen(false);
+            } else {
+              setCardopen(false);
+            }
           }}
           onDelete={() => handleDelete(activatetaskID)}
         />
-        <Logpanel />
+
+        <Logpanel 
+          isOpen={logsopen}
+          onCloseClick={() => {
+            if(cardopen === false){
+              setShifted(false);
+              setActivatetaskID(null);
+              setLogsopen(false);
+            }else{
+              setLogsopen(false);
+            }
+          }}
+        />
 
       </div>
     </div>
