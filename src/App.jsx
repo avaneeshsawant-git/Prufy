@@ -15,7 +15,6 @@ function App() {
   const [cardopen, setCardopen] = useState(false)
   const [logsopen, setLogsopen] = useState(false)
   const refer = useRef()
-  const box = useRef()
 
   const handle = () => {
     refer.current.style.top = `1.1rem`;

@@ -34,33 +34,71 @@
     box-sizing: border-box;
     font-size: 16px;
     font-family: 'Courier New', Courier, monospace;
+    font-weight: 800;
     padding: 13px;
     color: #e0ffe7;
     transition: height 0.3s ease;
 }
 
-.addlog{
-    background-color: #e0ffe7;
-    width: 8rem;
-    height: 1.5rem;
+.addlog {
+    /* background-color: #e0ffe7; */
+    width: 27rem;
+    height: 4rem;
     position: absolute;
     top: 3rem;
     left: 1rem;
+    /* cursor: pointer; */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+
+}
+
+.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.loginput {
+    width: 10rem;
+    height: 2.3rem;
+    position: absolute;
+    right: 9.1rem;
+    top: 0;
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: #e0ffe7;
+    border: 1px solid #166534;
+    border-radius: 5px;
+    color: #166534; 
+}
+
+.fileinput {
+    display: inline-block;
+    width: 5rem;
+    height: 1rem;
+    padding: 10px;
+    background-color: #e0ffe7;
+    border: 1px solid #166534;
+    border-radius: 5px;
+    color: #166534;
+    font-family:'Courier New', Courier, monospace;
     cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    display: none;
-    transition: display 10s ease;
-
+    font-size: 12px;
+    font-weight: 800;
 }
 
-.visible{
-    display: flex;
-}
-
-.loginput{
-    width: 4rem;
+.logbutton {
+    position: absolute;
+    bottom: -0.6rem;
+    right: -1.7rem;
+    width: 7rem;
     height: 1.5rem;
+    background-color: #e0ffe7;
+    color: #166534;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .close-icon {
@@ -72,7 +110,7 @@
     cursor: pointer;
 }
 
-.add_icon{
+.add_icon {
     width: 1.5rem;
     height: 1.5rem;
     position: absolute;
