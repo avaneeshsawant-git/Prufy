@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Magnifying glass -->
+  <circle cx="28" cy="28" r="17"
+          fill="none"
+          stroke="#166534"
+          stroke-width="4"/>
+
+  <line x1="42" y1="39" x2="56" y2="49"
+        stroke="#166534"
+        stroke-width="4"
+        stroke-linecap="round"/>
+
+  <!-- Checkmark (kept clear from circle) -->
+  <path d="M22.5 29.5 l6 6 l10 -11"
+        fill="none"
+        stroke="#166534"
+        stroke-width="4"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+</svg>

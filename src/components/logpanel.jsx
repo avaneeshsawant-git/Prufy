@@ -31,6 +31,10 @@ const logpanel = (prop) => {
     }
 
     const handleupload = () => {
+        if (log.title.trim() === "") {
+            alert("Please enter a log entry.");
+            return;
+        }
         const newLog = {
             id: crypto.randomUUID(),
             title: log.title,
@@ -39,9 +43,25 @@ const logpanel = (prop) => {
         };
         prop.onUpdateLog(newLog);
         setlog({ title: "", file: null });
+        setVertical(false);
+
     }
-    console.log("logs:", prop.activeLog?.logs);
-console.log("isArray:", Array.isArray(prop.activeLog?.logs));
+
+    const trimName = (name, max = 20) => {
+        return name.length > max ? name.slice(0, max) + "..." : name;
+    };
+
+    const formatDateTime = (iso) => {
+        const d = new Date(iso);
+        return d.toLocaleString(undefined, {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+    };
+
 
 
     return (
@@ -58,20 +78,22 @@ console.log("isArray:", Array.isArray(prop.activeLog?.logs));
 
             </div>
             <div className="lower">
-                <div className="logs_container" style={{height: vertical ? '6rem':'11rem'}}>
+                <div className="logs_container" style={{ height: vertical ? '6rem' : '11rem' }}>
                     {logs.length === 0 ? (
-                        <p className='log_text'>No logs available.</p>
+                        <p className='empty_log'>No logs available.</p>
                     ) : (
                         logs.map(log => (
                             <div key={log.id} className="log_entry">
-                                <p className='log_text'>{log.file ? log.file.name : "No file attached"} : {log.title}</p>
+                                <div className='loged_text'>{log.file ? trimName(log.file.name) : "No file attached"} : <span className="logtitle">{log.title}</span>
+                                    <br /> <span className="log_time">{formatDateTime(log.createdAt)}</span>
+                                </div>
                             </div>
                         )))}
                 </div>
-            
+
             </div>
         </div>
-        
+
     )
 }
 
