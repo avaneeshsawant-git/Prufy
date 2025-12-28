@@ -32,7 +32,8 @@ function App() {
       id: crypto.randomUUID(),
       task: task,
       description: "",
-      createdAt: new Date().toISOString().split('T')[0]
+      createdAt: new Date().toISOString().split('T')[0],
+      logs: []
     }])
     setTask("");
 
@@ -47,7 +48,7 @@ function App() {
     setShifted(false);
     setCardopen(false);
     setLogsopen(false);
-    }
+  }
 
   const CardShift = (id) => {
     setShifted(true)
@@ -61,9 +62,6 @@ function App() {
     setShifted(true)
     setActivatetaskID(id)
   }
-  
-  
-
 
 
   return (
@@ -82,7 +80,7 @@ function App() {
 
           {tasks.map(item => {
             return < div key={item.id} >
-              {<Slate title={item.task} onClick={() => CardShift(item.id) } onLogsclick={() => logPanelShift(item.id)} /> || "add some tasks!"}
+              {<Slate title={item.task} onClick={() => CardShift(item.id)} onLogsclick={() => logPanelShift(item.id)} /> || "add some tasks!"}
             </div>
           })}
 
@@ -96,7 +94,7 @@ function App() {
           }}
           onClick={() => {
             if (logsopen === false) {
-              
+
               setShifted(false);
               setActivatetaskID(null);
               setCardopen(false);
@@ -107,14 +105,28 @@ function App() {
           onDelete={() => handleDelete(activatetaskID)}
         />
 
-        <Logpanel 
+
+
+        <Logpanel
+          activelog={tasks.find(t => t.id === activatetaskID)}
+          logid={tasks.find(t => t.id === activatetaskID)?.logs?.[0]?.id}
           isOpen={logsopen}
+          onUpdateLog={(newLog) => {
+            setTasks(prevTasks =>
+              prevTasks.map(t =>
+                t.id === activatetaskID
+                  ? { ...t, logs: [...(t.logs || []), newLog] }
+                  : t
+              )
+            );
+          }}
+
           onCloseClick={() => {
-            if(cardopen === false){
+            if (cardopen === false) {
               setShifted(false);
               setActivatetaskID(null);
               setLogsopen(false);
-            }else{
+            } else {
               setLogsopen(false);
             }
           }}
