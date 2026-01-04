@@ -7,6 +7,7 @@ import { useState } from 'react'
 
 const logpanel = (prop) => {
     const [vertical, setVertical] = useState(false)
+    const [preview, setPreview] = useState(null)
     const [log, setlog] = useState({
         title: "",
         file: null
@@ -47,8 +48,8 @@ const logpanel = (prop) => {
 
     }
 
-    const trimName = (name, max = 20) => {
-        return name.length > max ? name.slice(0, max) + "..." : name;
+    const trimName = (name) => {
+        return name.length > 20 ? name.slice(0, 20) + "..." : name;
     };
 
     const formatDateTime = (iso) => {
@@ -61,6 +62,31 @@ const logpanel = (prop) => {
             minute: "2-digit"
         });
     };
+
+
+    const forceDownload = (file) => {
+        const url = URL.createObjectURL(file);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = file.name;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+
+    const handlepreview = (log) => {
+        if (log.file) {
+            const fileurl = URL.createObjectURL(log.file);
+            if (log.file.type.startsWith('image/')) {
+                window.open(fileurl, '_blank');
+            } else if (log.file.type === 'application/pdf') {
+                window.open(fileurl, '_blank');
+            } else {
+                forceDownload(log.file);
+            }
+        }
+    }
 
 
 
@@ -84,8 +110,12 @@ const logpanel = (prop) => {
                     ) : (
                         logs.map(log => (
                             <div key={log.id} className="log_entry">
-                                <div className='loged_text'>{log.file ? trimName(log.file.name) : "No file attached"} : <span className="logtitle">{log.title}</span>
-                                    <br /> <span className="log_time">{formatDateTime(log.createdAt)}</span>
+                                <div className='loged_text'>
+                                    <span className='log_file_name' onClick={() => handlepreview(log)}>
+                                        {log.file ? trimName(log.file.name) : "No file attached"}
+                                    </span>
+                                    <span className="logtitle">{log.title}</span>
+                                    <span className="log_time">{formatDateTime(log.createdAt)}</span>
                                 </div>
                             </div>
                         )))}
