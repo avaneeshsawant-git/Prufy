@@ -1,0 +1,78 @@
+.page {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0fdf4;
+}
+
+.login-container {
+    position: relative;
+    width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #e0ffe7;
+}
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+.login-container label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+}
+.login-container input[type="text"],
+.login-container input[type="email"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.login-container input[type="text"]:focus,
+.login-container input[type="email"]:focus,
+.login-container input[type="password"]:focus {
+    border-color: #013d18;
+    outline: none;
+}
+.login-container .btnn {
+    width: 100%;
+    padding: 10px;
+    border:#013d18  2px solid;
+    border-radius: 4px;
+    background-color: transparent;
+    color: #166534; 
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.login-container .btnn:hover {
+    background-color: #166534;
+    color: #e1eee3;
+}
+
+.signup{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color:transparent;
+    width: 80px;
+    height:30px;
+    border: 2px solid #166534;
+    border-radius: 15px;
+    color: #166534; 
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.signup:hover {
+    background-color: #166534;
+    color: #e1eee3;
+}

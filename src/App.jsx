@@ -6,6 +6,7 @@ import Navbar from './components/Navbar'
 import Slate from './components/slate'
 import Card from './components/card'
 import Logpanel from './components/logpanel'
+import Login from './components/login.jsx'
 
 function App() {
   const [task, setTask] = useState("")
@@ -14,6 +15,7 @@ function App() {
   const [activatetaskID, setActivatetaskID] = useState(null)
   const [cardopen, setCardopen] = useState(false)
   const [logsopen, setLogsopen] = useState(false)
+  const [login, setLogin] = useState(true)
   const refer = useRef()
 
   const handle = () => {
@@ -66,6 +68,8 @@ function App() {
 
   return (
     <div className="main">
+      {login ? <Login onLoginClick={() => setLogin(false)} /> 
+      :<>
       <Navbar />
       <div className="body">
         <h1 className='page_title'>your work & tasks!</h1>
@@ -132,9 +136,11 @@ function App() {
           }}
         />
 
+
       </div>
+    </>}
     </div>
-  )
+  ) 
 }
 
 export default App
