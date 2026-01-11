@@ -1,12 +1,16 @@
-import { useState, useRef } from 'react'
+import { useState, useRef , useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/Navbar'
 import Slate from './components/slate'
 import Card from './components/card'
 import Logpanel from './components/logpanel'
 import Login from './components/login.jsx'
+import { auth } from "./firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 function App() {
   const [task, setTask] = useState("")
@@ -15,8 +19,20 @@ function App() {
   const [activatetaskID, setActivatetaskID] = useState(null)
   const [cardopen, setCardopen] = useState(false)
   const [logsopen, setLogsopen] = useState(false)
-  const [login, setLogin] = useState(true)
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null)
   const refer = useRef()
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+
 
   const handle = () => {
     refer.current.style.top = `1.1rem`;
@@ -65,82 +81,84 @@ function App() {
     setActivatetaskID(id)
   }
 
-
+  if (loading) return null;
   return (
     <div className="main">
-      {login ? <Login onLoginClick={() => setLogin(false)} /> 
-      :<>
-      <Navbar />
-      <div className="body">
-        <h1 className='page_title'>your work & tasks!</h1>
-        <div className={`inside_box ${shifted ? "shifted" : ""}`}>
-          <button className='Add_but' onClick={handle} >ADD</button>
-          <input ref={refer} onChange={handlechange} onKeyDown={(e) => e.key === "Enter" && handlesubmit()}
-            value={task} className='Add_title' type='text' placeholder='Add Task' />
+      
+      {!user ? <Login />
+        : <>
+          <Navbar />
+          <div className="body">
+            <h1 className='page_title'>your work & tasks!</h1>
+            <div className={`inside_box ${shifted ? "shifted" : ""}`}>
+              <button className='Add_but' onClick={handle} >ADD</button>
+              <input ref={refer} onChange={handlechange} onKeyDown={(e) => e.key === "Enter" && handlesubmit()}
+                value={task} className='Add_title' type='text' placeholder='Add Task' />
 
-          {tasks.length === 0 && (
-            <p className="empty">Add some tasks!</p>
-          )}
+              {tasks.length === 0 && (
+                <p className="empty">Add some tasks!</p>
+              )}
 
-          {tasks.map(item => {
-            return < div key={item.id} >
-              {<Slate title={item.task} onClick={() => CardShift(item.id)} onLogsclick={() => logPanelShift(item.id)} /> || "add some tasks!"}
+              {tasks.map(item => {
+                return < div key={item.id} >
+                  {<Slate title={item.task} onClick={() => CardShift(item.id)} onLogsclick={() => logPanelShift(item.id)} /> || "add some tasks!"}
+                </div>
+              })}
+
             </div>
-          })}
 
-        </div>
+            <Card
+              task={tasks.find(t => t.id === activatetaskID)}
+              isOpen={cardopen}
+              onUpdate={(desc) => {
+                setTasks(tasks.map(t => t.id === activatetaskID ? { ...t, description: desc } : t));
+              }}
+              onClick={() => {
+                if (logsopen === false) {
 
-        <Card
-          task={tasks.find(t => t.id === activatetaskID)}
-          isOpen={cardopen}
-          onUpdate={(desc) => {
-            setTasks(tasks.map(t => t.id === activatetaskID ? { ...t, description: desc } : t));
-          }}
-          onClick={() => {
-            if (logsopen === false) {
-
-              setShifted(false);
-              setActivatetaskID(null);
-              setCardopen(false);
-            } else {
-              setCardopen(false);
-            }
-          }}
-          onDelete={() => handleDelete(activatetaskID)}
-        />
+                  setShifted(false);
+                  setActivatetaskID(null);
+                  setCardopen(false);
+                } else {
+                  setCardopen(false);
+                }
+              }}
+              onDelete={() => handleDelete(activatetaskID)}
+            />
 
 
 
-        <Logpanel
-          activelog={tasks.find(t => t.id === activatetaskID)}
-          logid={tasks.find(t => t.id === activatetaskID)?.logs?.[0]?.id}
-          isOpen={logsopen}
-          onUpdateLog={(newLog) => {
-            setTasks(prevTasks =>
-              prevTasks.map(t =>
-                t.id === activatetaskID
-                  ? { ...t, logs: [...(t.logs || []), newLog] }
-                  : t
-              )
-            );
-          }}
+            <Logpanel
+              activelog={tasks.find(t => t.id === activatetaskID)}
+              logid={tasks.find(t => t.id === activatetaskID)?.logs?.[0]?.id}
+              isOpen={logsopen}
+              onUpdateLog={(newLog) => {
+                setTasks(prevTasks =>
+                  prevTasks.map(t =>
+                    t.id === activatetaskID
+                      ? { ...t, logs: [...(t.logs || []), newLog] }
+                      : t
+                  )
+                );
+              }}
 
-          onCloseClick={() => {
-            if (cardopen === false) {
-              setShifted(false);
-              setActivatetaskID(null);
-              setLogsopen(false);
-            } else {
-              setLogsopen(false);
-            }
-          }}
-        />
+              onCloseClick={() => {
+                if (cardopen === false) {
+                  setShifted(false);
+                  setActivatetaskID(null);
+                  setLogsopen(false);
+                } else {
+                  setLogsopen(false);
+                }
+              }}
+            />
 
 
-      </div>
-    </>}
+          </div>
+        </>}
+      <ToastContainer />
     </div>
-  ) 
+  )
 }
 
 export default App

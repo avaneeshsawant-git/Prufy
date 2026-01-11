@@ -5,12 +5,12 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "XXXXXXX",
-  appId: "XXXXXXX"
+  apiKey: "AIzaSyC3r6DMQp2KIX3a_GID_t9skQ6OF9ORnIo",
+  authDomain: "prufy-1010.firebaseapp.com",
+  projectId: "prufy-1010",
+  storageBucket: "prufy-1010.firebasestorage.app",
+  messagingSenderId: "871772496664",
+  appId: "1:871772496664:web:041581fbfa715966c9346d"
 };
 
 const app = initializeApp(firebaseConfig);
