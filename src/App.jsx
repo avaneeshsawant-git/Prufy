@@ -1,4 +1,4 @@
-import { useState, useRef , useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -9,8 +9,9 @@ import Slate from './components/slate'
 import Card from './components/card'
 import Logpanel from './components/logpanel'
 import Login from './components/login.jsx'
-import { auth } from "./firebase";
+import { auth, db } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { onSnapshot, collection, query, orderBy, serverTimestamp, addDoc, getDocs,deleteDoc,doc, updateDoc } from 'firebase/firestore';
 
 function App() {
   const [task, setTask] = useState("")
@@ -32,6 +33,28 @@ function App() {
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    if (!user) {
+      setTasks([]);
+      return;
+    }
+
+    const q = query(
+      collection(db, "users", user.uid, "tasks"),
+      orderBy("createdAt", "desc")
+    );
+
+    const unsubTasks = onSnapshot(q, (snapshot) => {
+      const liveTasks = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setTasks(liveTasks);
+    });
+
+    return () => unsubTasks();
+  }, [user]);
+
 
 
   const handle = () => {
@@ -44,29 +67,34 @@ function App() {
     setTask(e.target.value)
     // setTasks([...tasks, {task }])
   }
-  const handlesubmit = () => {
-    if (!task.trim()) return
-    setTasks([...tasks, {
-      id: crypto.randomUUID(),
-      task: task,
+
+  const handlesubmit = async () => {
+    if (!task.trim() || !user) return;
+
+    await addDoc(collection(db, "users", user.uid, "tasks"), {
+      task,
       description: "",
-      createdAt: new Date().toISOString().split('T')[0],
+      createdAt: serverTimestamp(),
       logs: []
-    }])
+    });
+
     setTask("");
+    refer.current.style.opacity = 0;
+    refer.current.style.top = "-13rem";
+  };
 
+ const handleDelete = async (id) => {
+  if (!user || !id) return;
 
-    refer.current.style.opacity = 0
-    refer.current.style.top = `-13rem`
-  }
+  await deleteDoc(
+    doc(db, "users", user.uid, "tasks", id)
+  );
 
-  const handleDelete = (id) => {
-    setTasks(tasks.filter(item => item.id !== id))
-    setActivatetaskID(null);
-    setShifted(false);
-    setCardopen(false);
-    setLogsopen(false);
-  }
+  setActivatetaskID(null);
+  setShifted(false);
+  setCardopen(false);
+  setLogsopen(false);
+};
 
   const CardShift = (id) => {
     setShifted(true)
@@ -82,9 +110,10 @@ function App() {
   }
 
   if (loading) return null;
+
   return (
     <div className="main">
-      
+
       {!user ? <Login />
         : <>
           <Navbar />
@@ -110,8 +139,13 @@ function App() {
             <Card
               task={tasks.find(t => t.id === activatetaskID)}
               isOpen={cardopen}
-              onUpdate={(desc) => {
-                setTasks(tasks.map(t => t.id === activatetaskID ? { ...t, description: desc } : t));
+              onUpdate={ async (desc) => {
+                if(!user || !activatetaskID) return;
+
+                await updateDoc(
+                  doc(db, "users",user.uid,"tasks", activatetaskID),
+                  { description:desc}
+                );
               }}
               onClick={() => {
                 if (logsopen === false) {
@@ -123,7 +157,7 @@ function App() {
                   setCardopen(false);
                 }
               }}
-              onDelete={() => handleDelete(activatetaskID)}
+              onDelete={(id) => handleDelete(id)}
             />
 
 
