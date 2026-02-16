@@ -11,7 +11,7 @@ import Logpanel from './components/logpanel'
 import Login from './components/login.jsx'
 import { auth, db } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { onSnapshot, collection, query, orderBy, serverTimestamp, addDoc, getDocs,deleteDoc,doc, updateDoc } from 'firebase/firestore';
+import { onSnapshot, collection, query, orderBy, serverTimestamp, addDoc, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 
 function App() {
   const [task, setTask] = useState("")
@@ -22,6 +22,7 @@ function App() {
   const [logsopen, setLogsopen] = useState(false)
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null)
+  const [logs, setLogs] = useState([])
   const refer = useRef()
 
   useEffect(() => {
@@ -55,7 +56,39 @@ function App() {
     return () => unsubTasks();
   }, [user]);
 
+  const taskId = activatetaskID;
 
+
+  useEffect(() => {
+    if (!user || !taskId) return;
+
+    const q = query(
+      collection(db, "users", user.uid, "tasks", taskId, "logs"),
+      orderBy("createdAt", "desc")
+    );
+
+    const unsub = onSnapshot(q, (snapshot) => {
+      const liveLogs = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setLogs(liveLogs);
+    });
+
+    return () => unsub();
+  }, [user, taskId]);
+
+  const addlog = async (taskId, newLog) => {
+    if (!user || !taskId) return;
+    await addDoc(
+      collection(db, "users", user.uid, "tasks", taskId, "logs"),
+      {
+        title: newLog.title,
+        fileUrl: newLog.fileUrl || null,
+        createdAt: serverTimestamp()
+      }
+    );
+  }
 
   const handle = () => {
     refer.current.style.top = `1.1rem`;
@@ -83,18 +116,18 @@ function App() {
     refer.current.style.top = "-13rem";
   };
 
- const handleDelete = async (id) => {
-  if (!user || !id) return;
+  const handleDelete = async (id) => {
+    if (!user || !id) return;
 
-  await deleteDoc(
-    doc(db, "users", user.uid, "tasks", id)
-  );
+    await deleteDoc(
+      doc(db, "users", user.uid, "tasks", id)
+    );
 
-  setActivatetaskID(null);
-  setShifted(false);
-  setCardopen(false);
-  setLogsopen(false);
-};
+    setActivatetaskID(null);
+    setShifted(false);
+    setCardopen(false);
+    setLogsopen(false);
+  };
 
   const CardShift = (id) => {
     setShifted(true)
@@ -108,6 +141,12 @@ function App() {
     setShifted(true)
     setActivatetaskID(id)
   }
+
+  console.log("USER:", user?.uid);
+  console.log("TASK:", task?.id);
+  // console.log("LOG:", log);
+
+
 
   if (loading) return null;
 
@@ -139,12 +178,12 @@ function App() {
             <Card
               task={tasks.find(t => t.id === activatetaskID)}
               isOpen={cardopen}
-              onUpdate={ async (desc) => {
-                if(!user || !activatetaskID) return;
+              onUpdate={async (desc) => {
+                if (!user || !activatetaskID) return;
 
                 await updateDoc(
-                  doc(db, "users",user.uid,"tasks", activatetaskID),
-                  { description:desc}
+                  doc(db, "users", user.uid, "tasks", activatetaskID),
+                  { description: desc }
                 );
               }}
               onClick={() => {
@@ -163,18 +202,12 @@ function App() {
 
 
             <Logpanel
-              activelog={tasks.find(t => t.id === activatetaskID)}
+              logs={logs}
+              taskId={activatetaskID}
+              addlog={addlog}
               logid={tasks.find(t => t.id === activatetaskID)?.logs?.[0]?.id}
               isOpen={logsopen}
-              onUpdateLog={(newLog) => {
-                setTasks(prevTasks =>
-                  prevTasks.map(t =>
-                    t.id === activatetaskID
-                      ? { ...t, logs: [...(t.logs || []), newLog] }
-                      : t
-                  )
-                );
-              }}
+
 
               onCloseClick={() => {
                 if (cardopen === false) {
