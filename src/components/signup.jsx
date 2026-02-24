@@ -2,6 +2,7 @@ import React, { use } from 'react'
 import { useState, useEffect } from 'react'
 import './signup.css'
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { updateProfile } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import Login from './login.jsx';
@@ -22,6 +23,12 @@ const signup = () => {
         try {
             const res = await createUserWithEmailAndPassword(auth, email, password);
             const user = res.user;
+
+            await updateProfile(user, {
+                displayName: username
+            });
+
+            await user.reload();
 
             await setDoc(doc(db, "users", user.uid), {
                 uid: user.uid,

@@ -142,8 +142,8 @@ function App() {
     setActivatetaskID(id)
   }
 
-  console.log("USER:", user?.uid);
-  console.log("TASK:", task?.id);
+  // console.log("USER:", user?.uid);
+  // console.log("TASK:", task?.id);
   // console.log("LOG:", log);
 
 
@@ -152,11 +152,11 @@ function App() {
 
   return (
     <div className="main">
-
       {!user ? <Login />
         : <>
           <Navbar />
           <div className="body">
+            
             <h1 className='page_title'>your work & tasks!</h1>
             <div className={`inside_box ${shifted ? "shifted" : ""}`}>
               <button className='Add_but' onClick={handle} >ADD</button>

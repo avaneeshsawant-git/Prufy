@@ -21,9 +21,20 @@
     list-style: none;
     gap:48px;
     align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: text-decoration 0.8s ease;
+
 }
+.right_profile li:hover{
+    text-decoration: underline;
+}
+
+
 
 .search{
     border: 2px solid rgb(3, 42, 3);
     padding: 4px;
+    border-radius: 5px;
 }

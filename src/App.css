@@ -33,6 +33,7 @@
     overflow-y:auto;
     transform: translateX(0);
     transition: transform 1s ease;
+    box-shadow: 4px 4px 4px 4px rgba(0,0,0,0.15);
 }
 .inside_box.shifted {
   transform: translateX(-15rem);
@@ -104,4 +105,3 @@
     font-size: 1.5rem;
     color: #166534;
 }
-

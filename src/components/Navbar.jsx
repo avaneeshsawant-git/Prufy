@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { auth } from "../firebase";
 import './Navbar.css'
+import Account from './Account';
 const Navbar = () => {
 
   const handlelogout = async () => {
@@ -11,6 +12,12 @@ const Navbar = () => {
       console.error("Error signing out:", error);
     }
   }
+
+  const [showAccount, setShowAccount] = useState(false);
+
+  const handleacc = () => {
+    setShowAccount(!showAccount);
+  }
   
   return (
     <div className='nav'>
@@ -19,11 +26,12 @@ const Navbar = () => {
         <input type="text" className='search' placeholder='search' />
       </div>
       <ul className='right_profile'>
-        <li>Account</li>
+        <li onClick={handleacc}>Account</li>
         <li>About</li>
-        <li onClick={handlelogout}>logout</li>
+        <li onClick={handlelogout}>Logout</li>
       </ul>
-    </div>
+      <Account show={showAccount} />
+    </div> 
   )
 }
 

@@ -10,8 +10,8 @@
     gap: 10px;
     align-items: center;
     color: #e0ffe7;
-    cursor: pointer;
-
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
 }
 .indicator{
     height: 18px;
