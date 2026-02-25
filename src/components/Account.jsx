@@ -29,6 +29,7 @@ const Account = (prop) => {
 
     return (
         <div className={`account ${prop.show ? 'open' : ''}`}>
+            <div className="block"></div>
             <div className="username">User Account : {acc.username}</div>
             <div className="email">Email : {acc.email}</div>
             <div className="taskcount">Tasks: {acc.taskcount}</div>

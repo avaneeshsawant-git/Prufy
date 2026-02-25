@@ -9,6 +9,7 @@ import Slate from './components/slate'
 import Card from './components/card'
 import Logpanel from './components/logpanel'
 import Login from './components/login.jsx'
+import Sidesearch from './components/sidesearch.jsx'
 import { auth, db } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { onSnapshot, collection, query, orderBy, serverTimestamp, addDoc, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
@@ -24,6 +25,7 @@ function App() {
   const [user, setUser] = useState(null)
   const [logs, setLogs] = useState([])
   const refer = useRef()
+  const [on, setOn] = useState(false)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -154,7 +156,11 @@ function App() {
     <div className="main">
       {!user ? <Login />
         : <>
-          <Navbar />
+          <Navbar 
+          ison={on} 
+          onupdate={(val) => setOn(val)} 
+          />
+          
           <div className="body">
             
             <h1 className='page_title'>your work & tasks!</h1>
@@ -219,6 +225,8 @@ function App() {
                 }
               }}
             />
+
+            <Sidesearch ison={on} />
 
 
           </div>
