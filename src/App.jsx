@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, use } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -12,7 +12,8 @@ import Login from './components/login.jsx'
 import Sidesearch from './components/sidesearch.jsx'
 import { auth, db } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { onSnapshot, collection, query, orderBy, serverTimestamp, addDoc, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { onSnapshot, collection, query, orderBy, serverTimestamp, addDoc, getDocs, deleteDoc, doc, updateDoc, where } from 'firebase/firestore';
+
 
 function App() {
   const [task, setTask] = useState("")
@@ -26,6 +27,9 @@ function App() {
   const [logs, setLogs] = useState([])
   const refer = useRef()
   const [on, setOn] = useState(false)
+  const [users, setUsers] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [viewingUserId, setViewingUserId] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -37,35 +41,71 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const fetchUsers = async () => {
+      if (!searchText.trim()) {
+        setUsers([]);
+        return;
+      }
+
+      const q = query(
+        collection(db, "users"),
+        where("username", ">=", searchText),
+        where("username", "<=", searchText + "\uf8ff")
+      );
+
+      const snapshot = await getDocs(q);
+
+      const result = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+
+      setUsers(result);
+    };
+
+    fetchUsers();
+  }, [searchText]);
+
+  useEffect(() => {
     if (!user) {
       setTasks([]);
       return;
     }
 
+    const userToLoad = viewingUserId || user.uid;
+
     const q = query(
-      collection(db, "users", user.uid, "tasks"),
+      collection(db, "users", userToLoad, "tasks"),
       orderBy("createdAt", "desc")
     );
 
     const unsubTasks = onSnapshot(q, (snapshot) => {
-      const liveTasks = snapshot.docs.map(doc => ({
+      let liveTasks = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       }));
+
+      // if (viewingUserId) {
+      //   liveTasks = liveTasks.filter(task => task.isPublic);
+      // }
+
       setTasks(liveTasks);
     });
 
     return () => unsubTasks();
-  }, [user]);
+  }, [user, viewingUserId]);
 
   const taskId = activatetaskID;
-
+  const isowner = !viewingUserId;
 
   useEffect(() => {
     if (!user || !taskId) return;
 
+
+    const userToLoad = viewingUserId || user.uid;
+
     const q = query(
-      collection(db, "users", user.uid, "tasks", taskId, "logs"),
+      collection(db, "users", userToLoad, "tasks", taskId, "logs"),
       orderBy("createdAt", "desc")
     );
 
@@ -78,19 +118,32 @@ function App() {
     });
 
     return () => unsub();
-  }, [user, taskId]);
+  }, [user, taskId, viewingUserId]);
 
   const addlog = async (taskId, newLog) => {
+    if (!isowner) return;
     if (!user || !taskId) return;
     await addDoc(
       collection(db, "users", user.uid, "tasks", taskId, "logs"),
       {
         title: newLog.title,
         fileUrl: newLog.fileUrl || null,
+        filename: newLog.fileName || null,
         createdAt: serverTimestamp()
       }
     );
   }
+
+  const deleteLog = async (taskId ,logId ) =>{
+    if (!isowner) return;
+    if (!user || !taskId || !logId) return;
+
+    await deleteDoc(
+      doc(db,"users",user.uid,"tasks",taskId,"logs",logId)
+    )
+  }
+
+
 
   const handle = () => {
     refer.current.style.top = `1.1rem`;
@@ -104,6 +157,7 @@ function App() {
   }
 
   const handlesubmit = async () => {
+    if (!isowner) return;
     if (!task.trim() || !user) return;
 
     await addDoc(collection(db, "users", user.uid, "tasks"), {
@@ -119,6 +173,7 @@ function App() {
   };
 
   const handleDelete = async (id) => {
+    if (!isowner) return;
     if (!user || !id) return;
 
     await deleteDoc(
@@ -149,6 +204,12 @@ function App() {
   // console.log("LOG:", log);
 
 
+  useEffect(() => {
+      setShifted(false);
+      setCardopen(false);
+      setLogsopen(false);
+    
+  }, [viewingUserId , user?.uid]);
 
   if (loading) return null;
 
@@ -156,17 +217,23 @@ function App() {
     <div className="main">
       {!user ? <Login />
         : <>
-          <Navbar 
-          ison={on} 
-          onupdate={(val) => setOn(val)} 
+          <Navbar
+            ison={on}
+            onupdate={(val) => setOn(val)}
+            onSearch={(text) => setSearchText(text)}
           />
-          
+
           <div className="body">
-            
-            <h1 className='page_title'>your work & tasks!</h1>
+
+            <h1 className='page_title'>{viewingUserId ? "Viewing user's work" : "your work & tasks!"}</h1>
             <div className={`inside_box ${shifted ? "shifted" : ""}`}>
-              <button className='Add_but' onClick={handle} >ADD</button>
-              <input ref={refer} onChange={handlechange} onKeyDown={(e) => e.key === "Enter" && handlesubmit()}
+              {viewingUserId && (
+                <button className='Back' onClick={() => setViewingUserId(null)}>
+                  Back to My Tasks
+                </button>
+              )}
+              <button className='Add_but' onClick={handle} disabled={!isowner}>ADD</button>
+              <input ref={refer} disabled={!isowner} onChange={handlechange} onKeyDown={(e) => e.key === "Enter" && handlesubmit()}
                 value={task} className='Add_title' type='text' placeholder='Add Task' />
 
               {tasks.length === 0 && (
@@ -185,6 +252,7 @@ function App() {
               task={tasks.find(t => t.id === activatetaskID)}
               isOpen={cardopen}
               onUpdate={async (desc) => {
+                if (!isowner) return;
                 if (!user || !activatetaskID) return;
 
                 await updateDoc(
@@ -213,6 +281,8 @@ function App() {
               addlog={addlog}
               logid={tasks.find(t => t.id === activatetaskID)?.logs?.[0]?.id}
               isOpen={logsopen}
+              deleteLog={deleteLog}
+              viewingUserId={viewingUserId}
 
 
               onCloseClick={() => {
@@ -226,8 +296,17 @@ function App() {
               }}
             />
 
-            <Sidesearch ison={on} />
-
+            <Sidesearch
+              ison={on}
+              users={users}
+              onUserSelect={(id) => {
+                setViewingUserId(id);
+                setActivatetaskID(null);
+                setCardopen(false);
+                setLogsopen(false);
+                setShifted(false);
+              }}
+            />
 
           </div>
         </>}

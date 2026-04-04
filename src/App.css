@@ -53,8 +53,25 @@
     border-radius: 20px;
     border: 2px solid green;
     color: #e0ffe7;
-    background-color: #166534;
+    background-color: #003414;
     transition: scale 0.5s ease;
+    cursor: pointer;
+}
+
+.Back{
+    height:40px;
+    width: 100px;
+    position: absolute;
+    right:36px;
+    top:12px;
+    background-color: #003414;
+    color: #e0ffe7;
+    transition: scale 0.6s ease-in-out;
+    cursor: pointer;
+}
+
+.Back:hover {
+    scale: 1.05;
 }
 
 .Add_but:hover {

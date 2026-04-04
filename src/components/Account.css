@@ -64,3 +64,16 @@
     border-bottom-right-radius: 20px;
     box-shadow: 1px 1px 0px 0px #166534;
 }
+.profilePicWrapper {
+    position: absolute;
+    right: 40px;
+    top: 15px;
+}
+
+.profilePic {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #166534;
+}

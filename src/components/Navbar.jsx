@@ -20,19 +20,26 @@ const Navbar = (prop) => {
     setShowAccount(!showAccount);
   }
   const handlechange = (e) => {
-    if (e.target.value.trim() !== "") {
-      prop.onupdate(true);
-    } else {
-      prop.onupdate(false);
-    }
+    prop.onupdate(true);
+    prop.onSearch(e.target.value);
   }
 
+  const handleblur = (e) => {
+    e.target.value="";
+    prop.onupdate(false);
+  }
+
+  if (showAccount===true) {
+    setTimeout(() => {
+      setShowAccount(false);
+    }, 3000);
+  }
 
   return (
     <div className='nav'>
       <div className='left_profile'>
         <h2 className='brand'>Prufy</h2>
-        <input type="text" className='search' placeholder='search people' onChange={handlechange} />
+        <input type="text" className='search' placeholder='search people' onChange={handlechange} onBlur={handleblur}/>
       </div>
       <ul className='right_profile'>
         <li onClick={handleacc}>Account</li>

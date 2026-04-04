@@ -1,12 +1,30 @@
-import React from 'react'   
+import React from 'react'
 import './sidesearch.css'
+import Profiles from './profiles'
 
-const sidesearch = (prop) => {
+const Sidesearch = ({ ison, users, onUserSelect }) => {
   return (
-    <div className={`sidesearch ${prop.ison ? 'open' : ''}`}>
+    <div className={`sidesearch ${ison ? 'open' : ''}`}>
       <div className="header">See people's work</div>
-    </div>
-  )
-}
 
-export default sidesearch
+      <div className="pof">
+        {users.length === 0 ? (
+          <div>No users found</div>
+        ) : (
+          users.map((user) => (
+            <Profiles
+              key={user.id}
+              user={user}
+              onClick={() => {
+                console.log("Clicked user:", user.id);
+                onUserSelect(user.id);
+              }}
+            />
+          ))
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Sidesearch

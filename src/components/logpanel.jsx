@@ -2,6 +2,7 @@ import React from 'react'
 import './logpanel.css'
 import close from '../assets/close-log.svg'
 import add from '../assets/add.svg'
+import minus from '../assets/minus.svg'
 import { useState } from 'react'
 
 const logpanel = (prop) => {
@@ -26,24 +27,22 @@ const logpanel = (prop) => {
         setlog({ ...log, file: selectedFile });
     }
 
-    // 🔥 CHANGED: Now async because we upload to Cloudinary
+
     const handleupload = async () => {
         if (log.title.trim() === "") {
             alert("Please enter a log entry.");
             return;
         }
 
-        let fileUrl = null; // 🔥 NEW: will store Cloudinary URL
+        let fileUrl = null;
 
-        // 🔥 NEW: Upload to Cloudinary if file exists
         if (log.file) {
             const formData = new FormData();
             formData.append("file", log.file);
-            formData.append("upload_preset", "prufy_logs"); // 🔥 CHANGE THIS
-            // 🔥 Replace YOUR_UPLOAD_PRESET with your preset name
+            formData.append("upload_preset", "prufy_logs");
 
             const res = await fetch(
-                "https://api.cloudinary.com/v1_1/dofc7d28a/upload", // 🔥 CHANGE THIS
+                "https://api.cloudinary.com/v1_1/dofc7d28a/upload",
                 {
                     method: "POST",
                     body: formData
@@ -51,13 +50,13 @@ const logpanel = (prop) => {
             );
 
             const data = await res.json();
-            fileUrl = data.secure_url; // 🔥 Get permanent URL
+            fileUrl = data.secure_url;
         }
 
-        // 🔥 CHANGED: Send fileUrl instead of File object
         await prop.addlog(prop.taskId, {
             title: log.title,
-            fileUrl: fileUrl // 🔥 Store URL only
+            fileUrl: fileUrl,
+            fileName: log.file ? log.file.name : null
         });
 
         setlog({ title: "", file: null });
@@ -65,6 +64,7 @@ const logpanel = (prop) => {
     }
 
     const trimName = (name) => {
+        if (!name) return "No file attached";
         return name.length > 20 ? name.slice(0, 20) + "..." : name;
     };
 
@@ -78,10 +78,15 @@ const logpanel = (prop) => {
         return date.toLocaleString();
     };
 
-    // 🔥 CHANGED: Preview now uses fileUrl (no blob logic anymore)
     const handlepreview = (log) => {
         if (log.fileUrl) {
             window.open(log.fileUrl, "_blank");
+        }
+    }
+
+    const handleMinus = (log) => {
+        if (window.confirm("Are you sure you want to delete this log?")) {
+            prop.deleteLog(prop.taskId, log.id);
         }
     }
 
@@ -106,12 +111,13 @@ const logpanel = (prop) => {
                         logs.map(log => (
                             <div key={log.id} className="log_entry">
                                 <div className='loged_text'>
-                                    {/* 🔥 CHANGED: Use fileUrl instead of log.file */}
                                     <span className='log_file_name' onClick={() => handlepreview(log)}>
-                                        {log.fileUrl ? trimName(log.fileUrl.split('/').pop()) : "No file attached"}
+                                        {trimName(log.filename)}
                                     </span>
                                     <span className="logtitle">{log.title}</span>
                                     <span className="log_time">{formatDateTime(log.createdAt)}</span>
+                                    {!prop.viewingUserId &&
+                                        <img className="minus_log" src={minus} alt="Minus" onClick={() => handleMinus(log)} />}
                                 </div>
                             </div>
                         )))
