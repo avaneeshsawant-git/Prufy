@@ -1,91 +1,100 @@
-# Prufy 🟢  
-### Proof of Work • Tasks • Focus
+# 🧠 Prufy — Proof-of-Work Task Manager
 
-**Prufy** is a proof-of-work–driven task manager that focuses not just on *what* you plan to do, but on the **work you actually put in**.
-
-Inspired by systems like Google Classroom, Prufy brings accountability, clarity, and focus to personal productivity.
+Prufy is a full-stack productivity web application where users don’t just create tasks — they attach **verifiable proof (logs)** to track actual work done.
 
 ---
 
-## ✨ Why Prufy?
+## 🚀 Features
 
-Most todo apps stop at checkboxes.  
-Prufy goes further by encouraging **visible effort and progress**.
-
-> Tasks without proof are just intentions.
-
-Prufy is built for:
-- Focused work
-- Accountability
-- Clean, distraction-free workflows
-
----
-
-## 🧠 Core Idea
-
-Each task in Prufy is meant to have:
-- A clear start
-- Logged work sessions
-- A meaningful finish
-
-The UI is designed to make progress *visible*, not noisy.
+- 🔐 Firebase Authentication (Login / Signup)
+- 🗂 Create, edit, delete tasks
+- 📒 Add logs with file uploads (Cloudinary)
+- ⚡ Real-time updates using Firestore
+- 🌐 View other users’ public tasks
+- 🔍 Search users by username
+- 🔄 Toggle between private/public tasks
+- 🧾 Proof-based productivity tracking
 
 ---
 
-## 🖥️ Features (Current)
+## 🧠 Tech Stack
 
-- ✅ Create tasks instantly
-- ✅ Master–detail layout (task list + side panel)
-- ✅ Smooth panel animations
-- ✅ Clean, calming green UI
-- ✅ Reusable and scalable components
-- ✅ Desktop-first design
-
----
-
-## 🧩 Planned Features
-
-- ⏱️ Work session tracking (Start / Finish)
-- 📝 Logs for each task
-- 📊 Time spent per task
-- 🔍 Search tasks by work/logs
-- 🌐 Public & private task visibility
-- 💾 Local storage / backend integration
+- React (Vite)
+- Firebase Firestore
+- Firebase Auth
+- Cloudinary (file uploads)
+- CSS (custom UI)
 
 ---
 
-## 🎨 UI Philosophy
+## 📂 Project Structure
 
-- Calm, focused color palette
-- Minimal cognitive load
-- Clear visual hierarchy
-- Animations that explain interactions, not distract
 
-Responsiveness will be added after the desktop experience is finalized.
+src/
+├── components/
+├── firebase.js
+├── App.jsx
+└── main.jsx
 
----
-
-## 🛠️ Tech Stack
-
-- **Frontend:** React + Vite
-- **Styling:** Vanilla CSS
-- **State Management:** React Hooks
-- **Animations:** CSS transitions (state-driven)
-- **Version Control:** Git & GitHub
 
 ---
 
-## 🚀 Getting Started
+## ⚙️ Setup
 
-```bash
-# Clone the repository
-git clone https://github.com/avaneeshsawant-git/prufy.git
+### Clone repo
 
-# Navigate into the project
+git clone https://github.com/your-username/prufy.git
+
 cd prufy
 
-# Install dependencies
+
+### Install dependencies
+
 npm install
 
-# Start the development server
+
+### Run project
+
 npm run dev
+
+
+---
+
+## 🔐 Environment Variables (optional)
+
+Create `.env`:
+
+
+VITE_FIREBASE_API_KEY=your_key
+VITE_FIREBASE_AUTH_DOMAIN=your_domain
+VITE_FIREBASE_PROJECT_ID=your_project
+
+
+---
+
+## ⚠️ Limitations
+
+- Not fully responsive yet
+- Cloudinary cleanup is manual
+- Public/private filtering can be improved
+
+---
+
+## 💡 Future Improvements
+
+- Responsive UI
+- Profile pictures
+- Better task filtering
+- Cloudinary auto-delete
+
+---
+
+## 🧾 Description
+
+Prufy is a proof-of-work based productivity platform where users track tasks through verifiable logs and can explore publicly shared work from other users.
+
+---
+
+## 👨‍💻 Author
+
+Avaneesh Sawant
