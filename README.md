@@ -1,100 +1,146 @@
 # 🧠 Prufy — Proof-of-Work Task Manager
 
+🚀 **Live Demo:** https://prufy.vercel.app/
+
+---
+
+## 📌 Overview
+
 Prufy is a full-stack productivity web application where users don’t just create tasks — they attach **verifiable proof (logs)** to track actual work done.
+
+It focuses on accountability, transparency, and real progress rather than simple task completion.
+
+---
+
+## ✨ Highlights
+
+- Full-stack real-time application  
+- Proof-based productivity system  
+- Multi-user interaction  
+- Deployed and production-ready  
 
 ---
 
 ## 🚀 Features
 
-- 🔐 Firebase Authentication (Login / Signup)
-- 🗂 Create, edit, delete tasks
-- 📒 Add logs with file uploads (Cloudinary)
-- ⚡ Real-time updates using Firestore
-- 🌐 View other users’ public tasks
-- 🔍 Search users by username
-- 🔄 Toggle between private/public tasks
-- 🧾 Proof-based productivity tracking
+- Authentication using Firebase Auth  
+- Create, edit, and delete tasks  
+- Add logs with file uploads (Cloudinary)  
+- Real-time updates using Firestore  
+- View other users’ public tasks  
+- Search users by username  
+- Public / Private task toggle  
+- Proof-based productivity tracking  
 
 ---
 
 ## 🧠 Tech Stack
 
-- React (Vite)
-- Firebase Firestore
-- Firebase Auth
-- Cloudinary (file uploads)
-- CSS (custom UI)
+| Category        | Technology            |
+|----------------|----------------------|
+| Frontend       | React (Vite)         |
+| Backend / DB   | Firebase Firestore   |
+| Authentication | Firebase Auth        |
+| File Storage   | Cloudinary           |
+| Styling        | Custom CSS           |
 
 ---
 
 ## 📂 Project Structure
 
-
+```bash
 src/
 ├── components/
 ├── firebase.js
 ├── App.jsx
 └── main.jsx
-
+```
 
 ---
 
-## ⚙️ Setup
+## ⚙️ Setup Instructions
 
-### Clone repo
+### 1. Clone the repository
 
+```bash
 git clone https://github.com/your-username/prufy.git
-
 cd prufy
+```
 
+### 2. Install dependencies
 
-### Install dependencies
-
+```bash
 npm install
+```
 
+### 3. Run the project
 
-### Run project
-
+```bash
 npm run dev
-
+```
 
 ---
 
-## 🔐 Environment Variables (optional)
+## 🧩 Core Data Structure
 
-Create `.env`:
+```bash
+users
+└── uid
+    ├── username
+    ├── email
+    └── tasks
+        └── taskId
+            ├── task
+            ├── description
+            ├── isPublic
+            ├── createdAt
+            └── logs
+                └── logId
+                    ├── title
+                    ├── fileUrl
+                    ├── fileName
+                    └── createdAt
+```
 
+---
 
-VITE_FIREBASE_API_KEY=your_key
-VITE_FIREBASE_AUTH_DOMAIN=your_domain
-VITE_FIREBASE_PROJECT_ID=your_project
+## 🔄 How It Works
 
+1. User logs in using Firebase Authentication  
+2. Tasks are stored under the user’s document in Firestore  
+3. Logs (proof of work) are added under each task  
+4. Files are uploaded to Cloudinary and stored via URL  
+5. Real-time listeners (`onSnapshot`) update the UI instantly  
+6. Public tasks can be viewed by other users  
 
 ---
 
 ## ⚠️ Limitations
 
-- Not fully responsive yet
-- Cloudinary cleanup is manual
-- Public/private filtering can be improved
+- Not fully responsive yet  
+- Cloudinary file cleanup is manual  
+- Limited filtering and sorting  
 
 ---
 
 ## 💡 Future Improvements
 
-- Responsive UI
-- Profile pictures
-- Better task filtering
-- Cloudinary auto-delete
+- Responsive design for mobile  
+- Profile pictures  
+- Advanced filtering and sorting  
+- Cloudinary auto-delete integration  
+- UI animations and transitions  
+- Notification system  
 
 ---
 
-## 🧾 Description
+## 🧾 Concept
 
-Prufy is a proof-of-work based productivity platform where users track tasks through verifiable logs and can explore publicly shared work from other users.
+> Most task managers track what you plan to do.  
+> **Prufy tracks what you actually did.**
 
 ---
 
 ## 👨‍💻 Author
 
-Avaneesh Sawant
+**Avaneesh Sawant**
