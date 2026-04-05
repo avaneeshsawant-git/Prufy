@@ -43,7 +43,7 @@ const Navbar = (prop) => {
       </div>
       <ul className='right_profile'>
         <li onClick={handleacc}>Account</li>
-        <li>About</li>
+        <li onClick={() => window.open("/about.html", "_blank")}>About</li>
         <li onClick={handlelogout}>Logout</li>
       </ul>
       <Account show={showAccount} count={prop.count}/>

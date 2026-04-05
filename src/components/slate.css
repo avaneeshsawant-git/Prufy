@@ -12,7 +12,16 @@
     color: #e0ffe7;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
+    transition: transform 0.4s ease-out;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+.slate:hover{
+    background-color: #193625;
+    cursor: pointer;
+    transform: translateY(-7px);
+}
+
 .indicator{
     height: 18px;
     width:50px;
