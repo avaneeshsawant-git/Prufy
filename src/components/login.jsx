@@ -36,6 +36,11 @@ const login = (prop) => {
 
         <div className="page">
             {signup ? <Signup /> :
+            <>
+                <div className="up">
+                    <h1>Welcome to Prufy</h1>
+                    <p>Track your work with proof, not just promises.</p>
+                </div>
                 <div className="login-container">
                     <h2 >Login</h2>
                     <form className="login-form" onSubmit={handlesub}>
@@ -49,6 +54,7 @@ const login = (prop) => {
                     </form>
                     <button className='signup' onClick={handleSIGNUP}>signup</button>
                 </div>
+            </>
             }
         </div>
 

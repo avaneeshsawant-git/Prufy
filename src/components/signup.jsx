@@ -45,9 +45,18 @@ const signup = () => {
         }
     }
 
+    const handleSIGNUP = () => {
+        setLogin(true);
+    }
+
     return (
         <div className="page">
             {login ? <Login /> :
+            <>
+                <div className="up">
+                    <h1>Start your journey</h1>
+                    <p>Make your work visible and build real progress.</p>
+                </div>
                 <div className="signup-container">
                     <h2 >Sign up</h2>
                     <form className="signup-form" onSubmit={handlesub}>
@@ -62,7 +71,9 @@ const signup = () => {
                             value={password} onChange={(e) => setPassword(e.target.value)} />
                         <button type="submit" className='btnn'>Sign up</button>
                     </form>
+                    <button className='signup' onClick={handleSIGNUP}>login</button>
                 </div>
+            </>
             }
         </div>
     )
