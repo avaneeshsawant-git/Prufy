@@ -48,13 +48,13 @@
     border:#013d18  2px solid;
     border-radius: 4px;
     background-color: transparent;
-    color: #166534; 
+    color: #003414; 
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 .signup-container .btnn:hover {
-    background-color: #166534;
+    background-color: #003414;;
     color: #e1eee3;
 }
 

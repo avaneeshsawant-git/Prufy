@@ -14,6 +14,8 @@ const logpanel = (prop) => {
 
     const logs = prop.logs || [];
 
+    
+
     const verticalchange = () => {
         setVertical(v => !v);
     }

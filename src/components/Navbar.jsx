@@ -46,7 +46,7 @@ const Navbar = (prop) => {
         <li>About</li>
         <li onClick={handlelogout}>Logout</li>
       </ul>
-      <Account show={showAccount} />
+      <Account show={showAccount} count={prop.count}/>
       {/* <Sidesearch /> */}
     </div>
   )

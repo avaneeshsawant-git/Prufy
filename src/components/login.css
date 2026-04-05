@@ -48,13 +48,13 @@
     border:#013d18  2px solid;
     border-radius: 4px;
     background-color: transparent;
-    color: #166534; 
+    color: #003414; 
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 .login-container .btnn:hover {
-    background-color: #166534;
+    background-color: #003414;
     color: #e1eee3;
 }
 
@@ -65,14 +65,14 @@
     background-color:transparent;
     width: 80px;
     height:30px;
-    border: 2px solid #166534;
+    border: 2px solid #003414;
     border-radius: 15px;
-    color: #166534; 
+    color: #003414; 
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .signup:hover {
-    background-color: #166534;
+    background-color: #003414;
     color: #e1eee3;
 }

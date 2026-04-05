@@ -21,6 +21,10 @@ const Card = (prop) => {
     setEditing(false);
   };
 
+  const handlepvt = ()=>{
+    prop.onUpdatePvt(!task.isPublic);
+  }
+
   return (
     <div className={`card ${prop.isOpen && task ? "open" : ""}`}>
       {!task ? null : (
@@ -52,7 +56,7 @@ const Card = (prop) => {
             </p>
           )}
 
-          <button className="card_button">Public / Private</button>
+          <button className="card_button" onClick={handlepvt}>Public / Private</button>
 
           <button
             className="card_DELETE"

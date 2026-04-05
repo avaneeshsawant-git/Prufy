@@ -4,7 +4,7 @@
     box-sizing: border-box;
     height: 5rem;
     width: 42rem;
-    background-color: #166534;
+    background-color: #003414;
     display: flex;
     justify-content:space-between;
     gap: 10px;
@@ -16,8 +16,9 @@
 .indicator{
     height: 18px;
     width:50px;
-    background-color: rgba(135, 210, 135, 0.763);
-    border: 1px solid rgb(0, 255, 0);
+    background: #3f7554;
+    color: #ffffff;
+    border: 1px solid #e5e7eb;
     border-radius: 20px;
     text-align: center;
     box-sizing: border-box;
@@ -25,8 +26,15 @@
     font-size: 12px;
 }
 
-.leftside{
+.rightside{
     display: flex;
     gap:10px;
     align-items: center;
+}
+
+.leftside{
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+    align-items:start;
 }

@@ -10,7 +10,6 @@ const Account = (prop) => {
     const [acc, setacc] = useState({
         username: "",
         email: "",
-        taskcount: 0,
         created: "",
         photoURL: ""
     });
@@ -28,7 +27,6 @@ const Account = (prop) => {
                 setacc({
                     username: userData.username || "N/A",
                     email: user.email || "N/A",
-                    taskcount: 0,
                     created: user.metadata.creationTime || "N/A",
                     photoURL: userData.photoURL || ""
                 });
@@ -50,7 +48,7 @@ const Account = (prop) => {
             <div className="block"></div>
             <div className="username">User Account : {acc.username}</div>
             <div className="email">Email : {acc.email}</div>
-            <div className="taskcount">Tasks: {acc.taskcount}</div>
+            <div className="taskcount">Tasks: {prop.count}</div>
             <div className="created">Account Created : {acc.created}</div>
         </div>
     );

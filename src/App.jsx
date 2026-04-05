@@ -31,6 +31,7 @@ function App() {
   const [searchText, setSearchText] = useState("");
   const [viewingUserId, setViewingUserId] = useState(null);
 
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -58,7 +59,7 @@ function App() {
       const result = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
-      }));
+      })).filter(u => u.id !== user?.uid);
 
       setUsers(result);
     };
@@ -134,12 +135,12 @@ function App() {
     );
   }
 
-  const deleteLog = async (taskId ,logId ) =>{
+  const deleteLog = async (taskId, logId) => {
     if (!isowner) return;
     if (!user || !taskId || !logId) return;
 
     await deleteDoc(
-      doc(db,"users",user.uid,"tasks",taskId,"logs",logId)
+      doc(db, "users", user.uid, "tasks", taskId, "logs", logId)
     )
   }
 
@@ -164,6 +165,7 @@ function App() {
       task,
       description: "",
       createdAt: serverTimestamp(),
+      isPublic: true,
       logs: []
     });
 
@@ -176,14 +178,16 @@ function App() {
     if (!isowner) return;
     if (!user || !id) return;
 
-    await deleteDoc(
-      doc(db, "users", user.uid, "tasks", id)
-    );
 
-    setActivatetaskID(null);
-    setShifted(false);
-    setCardopen(false);
-    setLogsopen(false);
+    if (window.confirm("Are you sure you want to delete this task?")) {
+      await deleteDoc(
+        doc(db, "users", user.uid, "tasks", id)
+      );
+      setActivatetaskID(null);
+      setShifted(false);
+      setCardopen(false);
+      setLogsopen(false);
+    }
   };
 
   const CardShift = (id) => {
@@ -205,11 +209,21 @@ function App() {
 
 
   useEffect(() => {
-      setShifted(false);
-      setCardopen(false);
-      setLogsopen(false);
-    
-  }, [viewingUserId , user?.uid]);
+    setShifted(false);
+    setCardopen(false);
+    setLogsopen(false);
+
+  }, [viewingUserId, user?.uid]);
+
+
+  let count = tasks.length;
+  useEffect(() => {
+    count = tasks.length;
+  }, [tasks]);
+  
+  useEffect(() => {
+    setViewingUserId(null);
+  }, [user]);
 
   if (loading) return null;
 
@@ -221,11 +235,12 @@ function App() {
             ison={on}
             onupdate={(val) => setOn(val)}
             onSearch={(text) => setSearchText(text)}
+            count={count}
           />
 
           <div className="body">
 
-            <h1 className='page_title'>{viewingUserId ? "Viewing user's work" : "your work & tasks!"}</h1>
+            <h1 className='page_title'>{viewingUserId ? `Viewing ${users.find(u => u.id === viewingUserId)?.username || 'User'}'s work` : "your work & tasks!"}</h1>
             <div className={`inside_box ${shifted ? "shifted" : ""}`}>
               {viewingUserId && (
                 <button className='Back' onClick={() => setViewingUserId(null)}>
@@ -241,8 +256,9 @@ function App() {
               )}
 
               {tasks.map(item => {
+                if(viewingUserId && item.isPublic === false) return null;
                 return < div key={item.id} >
-                  {<Slate title={item.task} onClick={() => CardShift(item.id)} onLogsclick={() => logPanelShift(item.id)} /> || "add some tasks!"}
+                  {<Slate title={item.task} isPublic={item.isPublic} onClick={() => CardShift(item.id)} onLogsclick={() => logPanelShift(item.id)} /> || "add some tasks!"}
                 </div>
               })}
 
@@ -251,6 +267,16 @@ function App() {
             <Card
               task={tasks.find(t => t.id === activatetaskID)}
               isOpen={cardopen}
+              onUpdatePvt={async(val)=>{
+                if(!isowner) return;
+                if(!user || !activatetaskID) return;
+
+                await updateDoc(
+                  doc(db,"users",user.uid,"tasks",activatetaskID),
+                  {isPublic: val}
+                )
+              }}
+
               onUpdate={async (desc) => {
                 if (!isowner) return;
                 if (!user || !activatetaskID) return;

@@ -2,18 +2,22 @@
     display: flex;
     width: 60%;
     height: 50px;
-    color: rgb(44, 85, 46);
+    color: #003414; 
     align-items: center;
     gap: 10px;
     border: none;
     padding: 2px;
+    border: none;
     scale: 1;
     transition: all 0.3s ease;
+    font-size: 16px;
 }
 .profiles:hover{
     border: 1px solid rgb(3, 42, 3);
     cursor: pointer;
     scale: 1.05;
+    background-color: #c5f0d7;
+    /* color: #e0ffe7; */
 }
 
 .profilepic{
