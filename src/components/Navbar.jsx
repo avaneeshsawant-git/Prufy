@@ -45,7 +45,7 @@ const Navbar = (prop) => {
         <h2 className='brand'>Prufy</h2>
         <input
           type="text" className="search"
-          placeholder='search people' onChange={handlechange}
+          placeholder='search people' onInput={handlechange}
           onBlur={handleblur}
         />
       </div>
