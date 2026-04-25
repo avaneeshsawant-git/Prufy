@@ -27,7 +27,9 @@ const Navbar = (prop) => {
 
   const handleblur = (e) => {
     e.target.value = "";
+    setTimeout(() => {
     prop.onupdate(false);
+  }, 200);
   }
 
   if (showAccount === true) {
