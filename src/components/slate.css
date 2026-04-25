@@ -47,3 +47,26 @@
     gap:5px;
     align-items:start;
 }
+
+@media (max-width: 768px) {
+
+    .slate {
+        width: 95%;
+        margin: 20px auto;
+        padding: 16px;
+        height: auto;
+    }
+
+    .leftside {
+        width: 60%;
+    }
+
+    .rightside {
+        gap: 6px;
+    }
+
+    .indicator {
+        width: 60px;
+        font-size: 10px;
+    }
+}

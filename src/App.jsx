@@ -258,7 +258,7 @@ function App() {
               {tasks.map(item => {
                 if(viewingUserId && item.isPublic === false) return null;
                 return < div key={item.id} >
-                  {<Slate title={item.task} isPublic={item.isPublic} onClick={() => CardShift(item.id)} onLogsclick={() => logPanelShift(item.id)} /> || "add some tasks!"}
+                  {<Slate title={item.task} isPublic={item.isPublic} onCardsclick={() => CardShift(item.id)} onLogsclick={() => logPanelShift(item.id)} /> || "add some tasks!"}
                 </div>
               })}
 

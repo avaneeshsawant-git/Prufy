@@ -11,20 +11,23 @@
     background-color: #e0ffe7;
     top: 9rem;
     right: 5rem;
+
     opacity: 0;
+    visibility: hidden;
+
     transform: translateX(-24rem) scale(0.95);
     transition:
         transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-        opacity 0.75s ease;
-    pointer-events: none;
+        opacity 0.75s ease,
+        visibility 0.3s ease;
+
     box-shadow: 4px 4px 4px 4px rgba(0,0,0,0.15);
 }
 
-
 .card.open {
     opacity: 1;
+    visibility: visible;
     transform: translateX(0) scale(1);
-    pointer-events: auto;
 }
 
 .close {
@@ -36,7 +39,6 @@
     cursor: pointer;
 }
 
-
 .card_title {
     margin-top: 2rem;
     margin-bottom: 0.4rem;
@@ -46,12 +48,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    /* font-size: 1.2rem; */
     color: #00290f;
 }
 
 .desc_text {
-
     margin-left: 4%;
     margin-bottom: 1rem;
     width: 80%;
@@ -136,4 +136,55 @@
     left: 4%;
     font-size: 0.9rem;
     color: #00290f;
+}
+
+
+/* ========================= */
+/* 📱 MOBILE FIX ONLY */
+/* ========================= */
+
+@media (max-width: 768px) {
+
+    .card {
+        position: fixed;       
+        top: 56%;
+        left: 50%;
+        right: auto;
+
+        width: 100vw;
+        height: 84vh;
+
+        transform: translate(-50%, -50%) scale(0.95);
+
+        z-index: 9999;
+
+        overflow-y: auto;
+    }
+
+    .card.open {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .card_title{
+        width: 90%;
+        font-size: 34px;;
+    }
+
+    .desc_text,
+    .desc_input {
+        width: 90%;
+        height: 35vh;;
+    }
+
+    .card_button,
+    .card_DELETE {
+        width: 90%;
+    }
+
+    .date,
+    .status {
+        position: static;
+        margin-left: 4%;
+        margin-bottom: 5px;
+    }
 }

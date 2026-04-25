@@ -12,8 +12,16 @@ const slate = (prop) => {
                 <div className="indicator">{prop.isPublic ? "public" : "private"}</div>
             </div>
             <div className="rightside">
-                <Btn header="Info" variant="primary" onClick={prop.onClick} />
-                <Btn header="Logs" variant="secondary" className="but-disabled" onClick={prop.onLogsclick}/>
+                <Btn header="Info" variant="primary" onClick={(e) => {
+                    e.stopPropagation();   
+                    e.preventDefault();    
+                    prop.onCardsclick && prop.onCardsclick();
+                }} />
+                <Btn header="Logs" variant="primary" className="but-disabled" onClick={(e) => {
+                    e.stopPropagation();   
+                    e.preventDefault();    
+                    prop.onLogsclick && prop.onLogsclick();
+                }} />
 
             </div>
         </div>

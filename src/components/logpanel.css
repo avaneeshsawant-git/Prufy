@@ -9,7 +9,7 @@
     flex-direction: column;
     gap: 10px;
     background-color: #e0ffe7;
-    top: 33.9rem;
+    top: 33.3rem;
     right: 5rem;
     opacity: 0;
     transform: translateX(-24rem) scale(0.95);
@@ -223,4 +223,36 @@
     top: -2px;
     right: 2px;
     cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .panel {
+        width: 100%;
+        right: 0;
+        z-index: 2;
+        top:8.5rem;
+        height: 85vh;
+    }
+
+    .upper {
+        width: 100%;
+    }
+
+    .addlog {
+        width: 80%;
+        left: 10%;
+    }
+
+    .log_entry {
+        width: 90%;
+        height:40px;;
+    }
+
+    .loginput {
+        right: 20%;
+    }
+
+    .logs_container{
+        height: 60vh;
+    }
 }

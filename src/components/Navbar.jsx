@@ -1,10 +1,12 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { auth } from "../firebase";
 import './Navbar.css'
 import Account from './Account';
-import Sidesearch from './sidesearch';
+
 const Navbar = (prop) => {
+
+  const [showAccount, setShowAccount] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false); 
 
   const handlelogout = async () => {
     try {
@@ -14,22 +16,21 @@ const Navbar = (prop) => {
     }
   }
 
-  const [showAccount, setShowAccount] = useState(false);
-
   const handleacc = () => {
     setShowAccount(!showAccount);
   }
+
   const handlechange = (e) => {
     prop.onupdate(true);
     prop.onSearch(e.target.value);
   }
 
   const handleblur = (e) => {
-    e.target.value="";
+    e.target.value = "";
     prop.onupdate(false);
   }
 
-  if (showAccount===true) {
+  if (showAccount === true) {
     setTimeout(() => {
       setShowAccount(false);
     }, 3000);
@@ -37,17 +38,26 @@ const Navbar = (prop) => {
 
   return (
     <div className='nav'>
+
       <div className='left_profile'>
         <h2 className='brand'>Prufy</h2>
-        <input type="text" className='search' placeholder='search people' onChange={handlechange} onBlur={handleblur}/>
+        <input
+          type="text" className="search"
+          placeholder='search people' onChange={handlechange}
+          onBlur={handleblur}
+        />
       </div>
-      <ul className='right_profile'>
+      <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+        ☰
+      </div>
+
+      <ul className={`right_profile ${menuOpen ? "open" : ""}`}>
         <li onClick={handleacc}>Account</li>
         <li onClick={() => window.open("/about.html", "_blank")}>About</li>
         <li onClick={handlelogout}>Logout</li>
       </ul>
+
       <Account show={showAccount} count={prop.count}/>
-      {/* <Sidesearch /> */}
     </div>
   )
 }

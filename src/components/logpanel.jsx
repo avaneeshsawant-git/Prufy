@@ -1,4 +1,5 @@
 import React from 'react'
+import { useEffect } from 'react'
 import './logpanel.css'
 import close from '../assets/close-log.svg'
 import add from '../assets/add.svg'
@@ -14,7 +15,7 @@ const logpanel = (prop) => {
 
     const logs = prop.logs || [];
 
-    
+
 
     const verticalchange = () => {
         setVertical(v => !v);
@@ -92,6 +93,17 @@ const logpanel = (prop) => {
         }
     }
 
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
     return (
         <div className={`panel ${prop.isOpen ? "open" : ""}`}>
             <img className='add_icon' src={add} alt="add" onClick={verticalchange} />
@@ -106,7 +118,11 @@ const logpanel = (prop) => {
             </div>
 
             <div className="lower">
-                <div className="logs_container" style={{ height: vertical ? '6rem' : '11rem' }}>
+                <div className="logs_container" style={
+                    !isMobile
+                        ? { height: vertical ? '6rem' : '11rem' }
+                        : {}
+                }>
                     {logs.length === 0 ? (
                         <p className='empty_log'>No logs available.</p>
                     ) : (

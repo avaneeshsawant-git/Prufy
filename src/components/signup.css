@@ -5,60 +5,10 @@
     justify-content: center;
     align-items: center;
     background-color: #549e76;
-}
-
-.signup-container {
     position: relative;
-    width: 400px;
-    margin: 50px auto;
-    padding: 30px;
-    border: 1px solid #003414;;
-    border-radius: 15px;
-    background-color: #e0ffe7;
-    animation: fadeInUp 0.8s ease;
-}
-.signup-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-}
-.signup-container label {
-    display: block;
-    margin-bottom: 8px;
-    color: #555;
-}
-.signup-container input[type="text"],
-.signup-container input[type="email"],
-.signup-container input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-.signup-container input[type="text"]:focus,
-.signup-container input[type="email"]:focus,
-.signup-container input[type="password"]:focus {
-    border-color: #013d18;
-    outline: none;
-}
-.signup-container .btnn {
-    width: 100%;
-    padding: 10px;
-    border:#013d18  2px solid;
-    border-radius: 4px;
-    background-color: transparent;
-    color: #003414; 
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-.signup-container .btnn:hover {
-    background-color: #003414;;
-    color: #e1eee3;
 }
 
+/* HERO TEXT */
 .up {
     position: absolute;
     left: 40px;
@@ -77,5 +27,96 @@
     margin-left: 50px;
 }
 
+/* SIGNUP CARD */
+.signup-container {
+    position: relative;
+    width: 400px;
+    padding: 30px;
+    border: 1px solid #003414;
+    border-radius: 15px;
+    background-color: #e0ffe7;
+    animation: fadeInUp 0.8s ease;
+}
 
- 
+.signup-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.signup-container label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.signup-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.signup-container input:focus {
+    border-color: #013d18;
+    outline: none;
+}
+
+.signup-container .btnn {
+    width: 100%;
+    padding: 10px;
+    border: #013d18 2px solid;
+    border-radius: 4px;
+    background-color: transparent;
+    color: #003414;
+    cursor: pointer;
+}
+
+.signup-container .btnn:hover {
+    background-color: #003414;
+    color: #e1eee3;
+}
+
+/* ANIMATION */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@media (max-width: 768px) {
+
+    .page {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .up {
+        position: static;          
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .up h1 {
+        font-size: 40px;           
+    }
+
+    .up p {
+        font-size: 16px;
+        margin-left: 0;
+    }
+
+    .signup-container {
+        width: 100%;
+        max-width: 350px;
+    }
+}

@@ -6,7 +6,7 @@
 .main {
     width: 100vw;
     height: 100vh;
-    background: #F9FAF9;
+    background: #549e76;;
 
 }
 
@@ -14,7 +14,7 @@
     padding-top: 10px;
     background: #549e76;
     width: 100vw;
-    height: 89.7vh;
+    height: 90.7vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,17 +26,19 @@
     height: 80vh;
     width: 50rem;
     position: relative;
-    border: 1px solid #003414;;
+    border: 1px solid #003414;
+    ;
     border-radius: 15px;
     background-color: #e0ffe7;
     /* margin: 40px auto;  */
-    overflow-y:auto;
+    overflow-y: auto;
     transform: translateX(0);
     transition: transform 1s ease;
-    box-shadow: 4px 4px 4px 4px rgba(0,0,0,0.15);
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.15);
 }
+
 .inside_box.shifted {
-  transform: translateX(-15rem);
+    transform: translateX(-15rem);
 }
 
 .page_title {
@@ -59,12 +61,12 @@
     cursor: pointer;
 }
 
-.Back{
-    height:40px;
+.Back {
+    height: 40px;
     width: 100px;
     position: absolute;
-    right:36px;
-    top:12px;
+    right: 36px;
+    top: 12px;
     background-color: #003414;
     color: #e0ffe7;
     transition: scale 0.6s ease-in-out;
@@ -90,38 +92,63 @@
     border: 1px solid green;
     border-radius: 20px;
     box-sizing: border-box;
-    padding-left:18px;
+    padding-left: 18px;
     /* visibility: hidden; */
-    opacity:0;
-    
+    opacity: 0;
+
     transition: top 0.1ms ease,
-                opacity 0.4s ease;
-    
+        opacity 0.4s ease;
+
 }
 
 .inside_box::-webkit-scrollbar {
-  width: 8px;
+    width: 8px;
 }
 
 .inside_box::-webkit-scrollbar-track {
-  background: transparent;
+    background: transparent;
 }
 
 .inside_box::-webkit-scrollbar-thumb {
-  background-color: #003414;;
-  border-radius: 8px;
-  border: 2px solid #dcfce7;
+    background-color: #003414;
+    ;
+    border-radius: 8px;
+    border: 2px solid #dcfce7;
 }
 
 .inside_box::-webkit-scrollbar-thumb:hover {
-  background-color: #14532d;
+    background-color: #14532d;
 }
 
-.empty{
+.empty {
     position: absolute;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 1.5rem;
-    color: #003414;;
+    color: #003414;
+    ;
+}
+
+@media (max-width: 768px) {
+    .inside_box {
+        padding-top: 40px;
+        width: 100%; ;   
+        height: 90vh;
+    }
+
+    .inside_box.shifted {
+        transform: translateX(0);
+    }
+
+    .Add_title {
+        width: 50%;
+        right: 50%;
+        top: -10rem;
+    }
+
+    .Add_but {
+        pointer-events: auto;;
+        touch-action: auto;
+    }
 }

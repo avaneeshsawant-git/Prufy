@@ -74,3 +74,43 @@
     object-fit: cover;
     border: 3px solid #003414;;
 }
+
+
+@media (max-width: 768px) {
+
+    .account {
+        width: 80%;
+        max-width: 360px;
+        transform: translate(50%, -10px);
+        top: 67px;
+        height: auto;
+        padding-bottom: 10px;
+        right: 60%;
+    }
+
+    .account.open {
+        transform: translate(50%, 0);
+    }
+
+    .profilePicWrapper {
+        right: 20px;
+        top: 10px;
+    }
+
+
+    .username,
+    .email,
+    .taskcount,
+    .created {
+        margin-left: 12px;
+        font-size: 14px;
+    }
+
+    .created {
+        font-size: 11px;
+    }
+
+    .block {
+        display: none;   /* remove side strip on mobile */
+    }
+}

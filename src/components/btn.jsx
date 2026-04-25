@@ -3,9 +3,9 @@ import './btn.css'
 
 const Btn = ({ header, variant = "primary", onClick }) => {
   return (
-    <div className={`but but-${variant}`} onClick={onClick}>
+    <button className={`but but-${variant}`} onClick={onClick}>
       {header}
-    </div>
+    </button>
   );
 };
 
