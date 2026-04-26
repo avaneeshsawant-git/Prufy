@@ -76,7 +76,6 @@ const Card = (prop) => {
               : ""}
           </div>
 
-          <div className="status">Status: Active</div>
         </>
       )}
     </div>

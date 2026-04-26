@@ -11,7 +11,7 @@ import Logpanel from './components/logpanel'
 import Login from './components/login.jsx'
 import Sidesearch from './components/sidesearch.jsx'
 import { auth, db } from "./firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, EmailAuthProvider, reauthenticateWithCredential } from "firebase/auth";
 import { onSnapshot, collection, query, orderBy, serverTimestamp, addDoc, getDocs, deleteDoc, doc, updateDoc, where } from 'firebase/firestore';
 
 
@@ -41,33 +41,33 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-useEffect(() => {
-  const fetchUsers = async () => {
-    const clean = searchText.trim().toLowerCase();
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const clean = searchText.trim().toLowerCase();
 
-    if (!clean) {
-      setUsers([]);
-      return;
-    }
+      if (!clean) {
+        setUsers([]);
+        return;
+      }
 
-    const snapshot = await getDocs(collection(db, "users"));
+      const snapshot = await getDocs(collection(db, "users"));
 
-    const result = snapshot.docs
-      .map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }))
-      .filter(u =>
-        u.id !== user?.uid &&
-        u.username &&
-        u.username.toLowerCase().includes(clean)
-      );
+      const result = snapshot.docs
+        .map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        .filter(u =>
+          u.id !== user?.uid &&
+          u.username &&
+          u.username.toLowerCase().includes(clean)
+        );
 
-    setUsers(result);
-  };
+      setUsers(result);
+    };
 
-  fetchUsers();
-}, [searchText]);
+    fetchUsers();
+  }, [searchText]);
 
   useEffect(() => {
     if (!user) {
@@ -151,12 +151,19 @@ useEffect(() => {
   const handle = () => {
     refer.current.style.top = `1.1rem`;
     refer.current.style.opacity = 100;
-
+    setTimeout(() => {
+      refer.current.focus();
+    }, 0);
   };
 
   const handlechange = (e) => {
     setTask(e.target.value)
     // setTasks([...tasks, {task }])
+  }
+  const handletextblur = () => {
+    refer.current.style.opacity = 0;
+    refer.current.style.top = "-13rem";
+    setTask("");
   }
 
   const handlesubmit = async () => {
@@ -180,15 +187,29 @@ useEffect(() => {
     if (!isowner) return;
     if (!user || !id) return;
 
+    const password = prompt("Enter your password to delete:");
 
-    if (window.confirm("Are you sure you want to delete this task?")) {
-      await deleteDoc(
-        doc(db, "users", user.uid, "tasks", id)
+    if (!password) return;
+
+    try {
+      const credential = EmailAuthProvider.credential(
+        user.email,
+        password
       );
+
+      await reauthenticateWithCredential(user, credential);
+
+      await deleteDoc(doc(db, "users", user.uid, "tasks", id));
+
+      toast.success("Task deleted");
+
       setActivatetaskID(null);
       setShifted(false);
       setCardopen(false);
       setLogsopen(false);
+
+    } catch (error) {
+      toast.error("Wrong password");
     }
   };
 
@@ -222,7 +243,7 @@ useEffect(() => {
   useEffect(() => {
     count = tasks.length;
   }, [tasks]);
-  
+
   useEffect(() => {
     setViewingUserId(null);
   }, [user]);
@@ -243,86 +264,93 @@ useEffect(() => {
           <div className="body">
 
             <h1 className='page_title'>{viewingUserId ? `Viewing ${users.find(u => u.id === viewingUserId)?.username || 'User'}'s work` : "your work & tasks!"}</h1>
-            <div className={`inside_box ${shifted ? "shifted" : ""}`}>
-              {viewingUserId && (
-                <button className='Back' onClick={() => setViewingUserId(null)}>
-                  Back to My Tasks
-                </button>
-              )}
-              <button className='Add_but' onClick={handle} disabled={!isowner}>ADD</button>
-              <input ref={refer} disabled={!isowner} onChange={handlechange} onKeyDown={(e) => e.key === "Enter" && handlesubmit()}
-                value={task} className='Add_title' type='text' placeholder='Add Task' />
+            <div className="layout">
 
-              {tasks.length === 0 && (
-                <p className="empty">Add some tasks!</p>
-              )}
+              <div className={`inside_box ${shifted ? "shifted" : ""}`}>
+                {viewingUserId && (
+                  <button className='Back' onClick={() => setViewingUserId(null)}>
+                    Back to My Tasks
+                  </button>
+                )}
+                <button className='Add_but' onClick={handle} disabled={!isowner}>ADD</button>
+                <input ref={refer} disabled={!isowner} onChange={handlechange} onKeyDown={(e) => e.key === "Enter" && handlesubmit()}
+                  value={task} className='Add_title' type='text' placeholder='Add Task' onBlur={handletextblur} />
 
-              {tasks.map(item => {
-                if(viewingUserId && item.isPublic === false) return null;
-                return < div key={item.id} >
-                  {<Slate title={item.task} isPublic={item.isPublic} onCardsclick={() => CardShift(item.id)} onLogsclick={() => logPanelShift(item.id)} /> || "add some tasks!"}
-                </div>
-              })}
+                {tasks.length === 0 && (
+                  <p className="empty">Add some tasks!</p>
+                )}
 
+                {tasks.map(item => {
+                  if (viewingUserId && item.isPublic === false) return null;
+                  return < div key={item.id} >
+                    {<Slate title={item.task} isPublic={item.isPublic} onCardsclick={() => CardShift(item.id)} onLogsclick={() => logPanelShift(item.id)} /> || "add some tasks!"}
+                  </div>
+                })}
+
+              </div>
+              <div className="side_panels">
+
+                <Card
+                  task={tasks.find(t => t.id === activatetaskID)}
+                  isOpen={cardopen}
+                  onUpdatePvt={async (val) => {
+                    if (!isowner) return;
+                    if (!user || !activatetaskID) return;
+
+                    await updateDoc(
+                      doc(db, "users", user.uid, "tasks", activatetaskID),
+                      { isPublic: val }
+                    )
+                  }}
+
+                  onUpdate={async (desc) => {
+                    if (!isowner) return;
+                    if (!user || !activatetaskID) return;
+
+                    await updateDoc(
+                      doc(db, "users", user.uid, "tasks", activatetaskID),
+                      { description: desc }
+                    );
+                  }}
+                  onClick={() => {
+                    if (logsopen === false) {
+
+                      setShifted(false);
+                      setTimeout(() => {
+                        setActivatetaskID(null);
+                      }, 300);
+                      setCardopen(false);
+                    } else {
+                      setCardopen(false);
+                    }
+                  }}
+                  onDelete={(id) => handleDelete(id)}
+                />
+
+
+
+                <Logpanel
+                  logs={logs}
+                  taskId={activatetaskID}
+                  addlog={addlog}
+                  logid={tasks.find(t => t.id === activatetaskID)?.logs?.[0]?.id}
+                  isOpen={logsopen}
+                  deleteLog={deleteLog}
+                  viewingUserId={viewingUserId}
+
+
+                  onCloseClick={() => {
+                    if (cardopen === false) {
+                      setShifted(false);
+                      setActivatetaskID(null);
+                      setLogsopen(false);
+                    } else {
+                      setLogsopen(false);
+                    }
+                  }}
+                />
+              </div>
             </div>
-
-            <Card
-              task={tasks.find(t => t.id === activatetaskID)}
-              isOpen={cardopen}
-              onUpdatePvt={async(val)=>{
-                if(!isowner) return;
-                if(!user || !activatetaskID) return;
-
-                await updateDoc(
-                  doc(db,"users",user.uid,"tasks",activatetaskID),
-                  {isPublic: val}
-                )
-              }}
-
-              onUpdate={async (desc) => {
-                if (!isowner) return;
-                if (!user || !activatetaskID) return;
-
-                await updateDoc(
-                  doc(db, "users", user.uid, "tasks", activatetaskID),
-                  { description: desc }
-                );
-              }}
-              onClick={() => {
-                if (logsopen === false) {
-
-                  setShifted(false);
-                  setActivatetaskID(null);
-                  setCardopen(false);
-                } else {
-                  setCardopen(false);
-                }
-              }}
-              onDelete={(id) => handleDelete(id)}
-            />
-
-
-
-            <Logpanel
-              logs={logs}
-              taskId={activatetaskID}
-              addlog={addlog}
-              logid={tasks.find(t => t.id === activatetaskID)?.logs?.[0]?.id}
-              isOpen={logsopen}
-              deleteLog={deleteLog}
-              viewingUserId={viewingUserId}
-
-
-              onCloseClick={() => {
-                if (cardopen === false) {
-                  setShifted(false);
-                  setActivatetaskID(null);
-                  setLogsopen(false);
-                } else {
-                  setLogsopen(false);
-                }
-              }}
-            />
 
             <Sidesearch
               ONupdate={(val) => setOn(val)}

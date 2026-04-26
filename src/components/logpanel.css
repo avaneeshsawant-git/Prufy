@@ -1,29 +1,36 @@
 .panel {
-    z-index: 1;
-    height: 30vh;
-    width: 30rem;
     position: absolute;
-    border: 1px solid #003414;;
-    border-radius: 15px;
+    left: calc(50% + 12rem);
+    top: 33.2rem;
+
+    width: min(30rem, 90vw);
+    height: 30vh;
+
     display: flex;
     flex-direction: column;
     gap: 10px;
+
     background-color: #e0ffe7;
-    top: 33.1rem;
-    right: 5rem;
+    border: 1px solid #003414;
+    border-radius: 15px;
+
     opacity: 0;
-    transform: translateX(-24rem) scale(0.95);
-    transition:
-        transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-        opacity 0.75s ease;
     pointer-events: none;
-    box-shadow: 4px 4px 4px 4px rgba(0,0,0,0.15);
+
+    transform: translateX(-120px) scale(0.95);
+
+    transition:
+    transform 0.3s ease,
+    opacity 1s ease;
+
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.15);
 }
 
 .panel.open {
     opacity: 1;
-    transform: translateX(0) scale(1);
     pointer-events: auto;
+
+    transform: translateX(0) scale(1);
 }
 
 .upper {
@@ -225,42 +232,33 @@
     cursor: pointer;
 }
 
-@media (max-width: 900px) {
-    .card,
-    .log-panel {
-        right: 1rem;
-        width: min(28rem, 90%);
-    }
-}
-
 @media (max-width: 768px) {
-    .panel {
-        width: 100%;
-        right: 0;
-        z-index: 2;
-        top:8.5rem;
-        height: 85vh;
-    }
-
-    .upper {
+    .upper{
         width: 100%;
     }
-
-    .addlog {
-        width: 80%;
-        left: 10%;
+    .logbutton{
+        right: 4.7rem;
     }
-
-    .log_entry {
+    .log_entry{
         width: 90%;
-        height:40px;;
     }
 
-    .loginput {
-        right: 20%;
+    .panel {
+        position: fixed;
+
+        top: 59%;
+        left: 50%;
+        right: auto;
+
+        width: 90%;
+        height: 75vh;
+
+        transform: translate(-50%, -50%) scale(0.95);
+
+        z-index: 9999;
     }
 
-    .logs_container{
-        height: 60vh;
+    .panel.open {
+        transform: translate(-50%, -50%) scale(1);
     }
 }

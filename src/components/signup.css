@@ -94,20 +94,24 @@
 @media (max-width: 768px) {
 
     .page {
+        min-height: 100vh; 
+        width: 100%;      
         flex-direction: column;
         justify-content: center;
         align-items: center;
         padding: 20px;
+        gap: 16px;           
     }
 
     .up {
-        position: static;          
+        position: static;
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
+        width: 100%;
     }
 
     .up h1 {
-        font-size: 40px;           
+        font-size: 40px;
     }
 
     .up p {
@@ -116,7 +120,8 @@
     }
 
     .signup-container {
-        width: 100%;
+        width: 260px;
         max-width: 350px;
+        margin: 0 auto;     
     }
 }

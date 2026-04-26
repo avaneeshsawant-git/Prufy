@@ -1,33 +1,35 @@
 .card {
-    z-index: 1;
-    height: 46vh;
-    width: 30rem;
     position: absolute;
-    border: 1px solid #166534;
-    border-radius: 15px;
+    left: calc(50% + 12rem);
+    top: 7.9rem;
+
+    width: min(30rem, 90vw);
+    height: 46vh;
+
     display: flex;
     flex-direction: column;
     gap: 10px;
+
     background-color: #e0ffe7;
-    top: 8.4rem;
-    right: 5rem;
+    border: 1px solid #166534;
+    border-radius: 15px;
 
     opacity: 0;
-    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-120px) scale(0.96);
 
-    transform: translateX(-24rem) scale(0.95);
     transition:
-        transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-        opacity 0.75s ease,
-        visibility 0.3s ease;
+    transform 0.3s ease,
+    opacity 1s ease;
 
-    box-shadow: 4px 4px 4px 4px rgba(0,0,0,0.15);
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.15);
 }
 
 .card.open {
     opacity: 1;
-    visibility: visible;
-    transform: translateX(0) scale(1);
+    pointer-events: auto;
+
+    transform: translate3d(0, 0, 0) scale(0.96);
 }
 
 .close {
@@ -138,29 +140,20 @@
     color: #00290f;
 }
 
-
-@media (max-width: 900px) {
-    .card,
-    .log-panel {
-        right: 1rem;
-        width: min(28rem, 90%);
-    }
-}
-
 @media (max-width: 768px) {
-
     .card {
-        position: fixed;       
-        top: 56%;
+        position: fixed;
+
+        top: 60%;
         left: 50%;
         right: auto;
 
-        width: 100vw;
-        height: 84vh;
+        width: 90%;
+        height: 77vh;
 
         transform: translate(-50%, -50%) scale(0.95);
 
-        z-index: 9999;
+        z-index: 9998;
 
         overflow-y: auto;
     }
@@ -169,26 +162,19 @@
         transform: translate(-50%, -50%) scale(1);
     }
 
-    .card_title{
+    .card_title {
         width: 90%;
-        font-size: 34px;;
+        font-size: 28px;
     }
 
     .desc_text,
     .desc_input {
         width: 90%;
-        height: 35vh;;
+        height: 35vh;
     }
 
     .card_button,
     .card_DELETE {
         width: 90%;
-    }
-
-    .date,
-    .status {
-        position: static;
-        margin-left: 4%;
-        margin-bottom: 5px;
     }
 }
