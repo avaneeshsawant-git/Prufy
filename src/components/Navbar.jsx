@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect, use } from 'react'
 import { auth } from "../firebase";
 import './Navbar.css'
 import Account from './Account';
@@ -21,16 +21,18 @@ const Navbar = (prop) => {
   }
 
   const handlechange = (e) => {
+    if (e.target.value.trim() === "") {
+      prop.onupdate(false);
+      return;
+    }
+
     prop.onupdate(true);
     prop.onSearch(e.target.value);
   }
 
-  const handleblur = (e) => {
-    e.target.value = "";
-    setTimeout(() => {
-    prop.onupdate(false);
-  }, 200);
-  }
+  // const handleblur = (e) => {
+  //   e.target.value = "";
+  // }
 
   if (showAccount === true) {
     setTimeout(() => {
@@ -46,7 +48,7 @@ const Navbar = (prop) => {
         <input
           type="text" className="search"
           placeholder='search people' onInput={handlechange}
-          onBlur={handleblur}
+          // onBlur={handleblur}
         />
       </div>
       <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>

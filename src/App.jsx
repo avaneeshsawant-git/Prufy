@@ -323,6 +323,7 @@ function App() {
             />
 
             <Sidesearch
+              ONupdate={(val) => setOn(val)}
               ison={on}
               users={users}
               onUserSelect={(id) => {

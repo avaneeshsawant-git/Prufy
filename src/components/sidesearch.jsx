@@ -2,7 +2,14 @@ import React from 'react'
 import './sidesearch.css'
 import Profiles from './profiles'
 
-const Sidesearch = ({ ison, users, onUserSelect, }) => {
+
+
+const Sidesearch = ({ ison, users, onUserSelect, ONupdate}) => {
+  
+  const AltOn=()=>{
+    ONupdate(!ison);
+  }
+
   return (
     <div className={`sidesearch ${ison ? 'open' : ''}`}>
       <div className="header">See people's work</div>
@@ -16,8 +23,8 @@ const Sidesearch = ({ ison, users, onUserSelect, }) => {
               key={user.id}
               user={user}
               onClick={() => {
-                console.log("Clicked user:", user.id);
                 onUserSelect(user.id);
+                AltOn();
               }}
             />
           ))
