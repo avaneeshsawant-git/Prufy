@@ -277,7 +277,7 @@ function App() {
                   value={task} className='Add_title' type='text' placeholder='Add Task' onBlur={handletextblur} />
 
                 {tasks.length === 0 && (
-                  <p className="empty">Add some tasks!</p>
+                  <p className="empty">No tasks yet. Add some!</p>
                 )}
 
                 {tasks.map(item => {
