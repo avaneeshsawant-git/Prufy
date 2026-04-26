@@ -139,7 +139,7 @@
 }
 
 
-@media (max-width: 1200px) {
+@media (max-width: 900px) {
     .card,
     .log-panel {
         right: 1rem;
