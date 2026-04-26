@@ -111,6 +111,6 @@
     }
 
     .block {
-        display: none;   /* remove side strip on mobile */
+        display: none;   
     }
 }

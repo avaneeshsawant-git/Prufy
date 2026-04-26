@@ -4,11 +4,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #549e76;
+    background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(0,0,0,0.25), transparent 60%),
+        linear-gradient(135deg, #1b975d, #20603e, #8bc5a5);
+
+    background-size: 400% 400%;   
+    background-position: 50% 50%;
+
+    animation: oscillateBg 14s ease-in-out infinite alternate;
     position: relative;
 }
 
-/* HERO TEXT */
 .up {
     position: absolute;
     left: 40px;
@@ -27,7 +34,6 @@
     margin-left: 50px;
 }
 
-/* SIGNUP CARD */
 .signup-container {
     position: relative;
     width: 400px;
@@ -78,7 +84,6 @@
     color: #e1eee3;
 }
 
-/* ANIMATION */
 @keyframes fadeInUp {
     from {
         opacity: 0;
