@@ -41,28 +41,27 @@ function App() {
     return () => unsubscribe();
   }, []);
 
- useEffect(() => {
+useEffect(() => {
   const fetchUsers = async () => {
-
-    const clean = searchText.trim().toLowerCase(); 
+    const clean = searchText.trim().toLowerCase();
 
     if (!clean) {
       setUsers([]);
       return;
     }
 
-    const q = query(
-      collection(db, "users"),
-      where("username", ">=", clean),
-      where("username", "<=", clean + "\uf8ff")
-    );
+    const snapshot = await getDocs(collection(db, "users"));
 
-    const snapshot = await getDocs(q);
-
-    const result = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    })).filter(u => u.id !== user?.uid);
+    const result = snapshot.docs
+      .map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+      .filter(u =>
+        u.id !== user?.uid &&
+        u.username &&
+        u.username.toLowerCase().includes(clean)
+      );
 
     setUsers(result);
   };

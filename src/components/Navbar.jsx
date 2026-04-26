@@ -1,4 +1,4 @@
-import React, { useState,useEffect, use } from 'react'
+import React, { useState, useEffect, use } from 'react'
 import { auth } from "../firebase";
 import './Navbar.css'
 import Account from './Account';
@@ -6,7 +6,7 @@ import Account from './Account';
 const Navbar = (prop) => {
 
   const [showAccount, setShowAccount] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false); 
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handlelogout = async () => {
     try {
@@ -46,9 +46,13 @@ const Navbar = (prop) => {
       <div className='left_profile'>
         <h2 className='brand'>Prufy</h2>
         <input
-          type="text" className="search"
-          placeholder='search people' onInput={handlechange}
-          // onBlur={handleblur}
+          type="text"
+          className="search"
+          placeholder="search people"
+          onInput={handlechange}
+          autoCapitalize="none"
+          autoCorrect="off"
+          spellCheck={false}
         />
       </div>
       <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
@@ -61,7 +65,7 @@ const Navbar = (prop) => {
         <li onClick={handlelogout}>Logout</li>
       </ul>
 
-      <Account show={showAccount} count={prop.count}/>
+      <Account show={showAccount} count={prop.count} />
     </div>
   )
 }
