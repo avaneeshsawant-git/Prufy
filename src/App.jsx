@@ -41,31 +41,34 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      if (!searchText.trim()) {
-        setUsers([]);
-        return;
-      }
+ useEffect(() => {
+  const fetchUsers = async () => {
 
-      const q = query(
-        collection(db, "users"),
-        where("username", ">=", searchText),
-        where("username", "<=", searchText + "\uf8ff")
-      );
+    const clean = searchText.trim().toLowerCase(); 
 
-      const snapshot = await getDocs(q);
+    if (!clean) {
+      setUsers([]);
+      return;
+    }
 
-      const result = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })).filter(u => u.id !== user?.uid);
+    const q = query(
+      collection(db, "users"),
+      where("username", ">=", clean),
+      where("username", "<=", clean + "\uf8ff")
+    );
 
-      setUsers(result);
-    };
+    const snapshot = await getDocs(q);
 
-    fetchUsers();
-  }, [searchText]);
+    const result = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    })).filter(u => u.id !== user?.uid);
+
+    setUsers(result);
+  };
+
+  fetchUsers();
+}, [searchText]);
 
   useEffect(() => {
     if (!user) {
