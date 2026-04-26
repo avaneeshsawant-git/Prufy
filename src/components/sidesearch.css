@@ -49,6 +49,12 @@
     padding-left: 20px;
 }
 
+@media (max-width: 1200px) {
+    .sidesearch {
+        width: 16rem;
+    }
+}
+
 @media (max-width: 768px) {
     .sidesearch {
         width: 21rem;

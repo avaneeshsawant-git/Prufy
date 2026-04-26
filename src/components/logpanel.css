@@ -9,7 +9,7 @@
     flex-direction: column;
     gap: 10px;
     background-color: #e0ffe7;
-    top: 33.3rem;
+    top: 33.1rem;
     right: 5rem;
     opacity: 0;
     transform: translateX(-24rem) scale(0.95);
@@ -224,6 +224,14 @@
     right: 2px;
     cursor: pointer;
 }
+
+/* @media (max-width: 1200px) {
+    .card,
+    .log-panel {
+        right: 1rem;
+        width: min(28rem, 90%);
+    }
+} */
 
 @media (max-width: 768px) {
     .panel {

@@ -9,7 +9,7 @@
     flex-direction: column;
     gap: 10px;
     background-color: #e0ffe7;
-    top: 9rem;
+    top: 8.4rem;
     right: 5rem;
 
     opacity: 0;
@@ -139,9 +139,13 @@
 }
 
 
-/* ========================= */
-/* 📱 MOBILE FIX ONLY */
-/* ========================= */
+@media (max-width: 1200px) {
+    .card,
+    .log-panel {
+        right: 1rem;
+        width: min(28rem, 90%);
+    }
+}
 
 @media (max-width: 768px) {
 
