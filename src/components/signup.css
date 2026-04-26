@@ -101,7 +101,7 @@
         align-items: center;
         padding: 20px;
         gap: 16px;      
-        margin-right: 6px;     
+        margin-right: 6px;  
     }
 
     .up {
@@ -122,7 +122,6 @@
 
     .signup-container {
         width: 260px;
-        max-width: 350px;
-        margin: 0 auto;     
+        max-width: 350px;    
     }
 }
