@@ -116,8 +116,7 @@ users
 ---
 
 ## ⚠️ Limitations
-
-- Not fully responsive yet  
+ 
 - Cloudinary file cleanup is manual  
 - Limited filtering and sorting  
 
