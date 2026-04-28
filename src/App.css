@@ -27,14 +27,14 @@ html, body {
     background: #549e76;
     
     background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35), transparent 60%),
-        radial-gradient(circle at 70% 70%, rgba(0,0,0,0.25), transparent 60%),
-        linear-gradient(135deg, #1b975d, #20603e, #8bc5a5);
+        radial-gradient(circle at 30% 30%, rgba(221, 109, 109, 0.45), transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(21, 1, 70, 0.45), transparent 60%),
+        linear-gradient(135deg, #0b3923, #148f4d, #8bc5a5);
 
     background-size: 400% 400%;   
     background-position: 50% 50%;
 
-    animation: oscillateBg 14s ease-in-out infinite alternate;
+    animation: oscillateBg 16s ease-in-out infinite alternate;
 
 }
 
